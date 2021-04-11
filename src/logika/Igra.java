@@ -25,6 +25,10 @@ public class Igra {
 		naPotezi = Igralec.T;
 	}
 	
+/** 
+ * TODO: 
+ * public boolean odigraj(Koordinati koordinati)
+ */
 	
 	
 }
