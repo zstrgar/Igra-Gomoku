@@ -1,16 +1,14 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import logika.Igra;
 import logika.Igralec;
 import splosno.Koordinati;
-
-import logika.Igra;
-import logika.Igralec;
-import logika.Stanje;
 
 public class Vodja {
 	
@@ -20,7 +18,7 @@ public class Vodja {
 	
 	private static Map<Igralec, VrstaIgralca> vrstaIgralca;
 	
-	public static void igramo() {
+	public static void igramo() throws IOException {
 		while(true) {
 			System.out.println("Nova igra. Prosim, da izberete:");
 			System.out.println(" 1 - BEL èlovek, ÈRN raèunalnik");
@@ -84,7 +82,7 @@ public class Vodja {
 
 /** raèunalnikova poteza*/
 	public static Koordinati racunalnikovaPoteza(Igra igra) {
-		List<Koordinati> moznePoteze = igra.poteze();
+		List<Koordinati> moznePoteze = igra.moznePoteze();
 		int randomIndex = random.nextInt(moznePoteze.size());
 		Koordinati poteza = moznePoteze.get(randomIndex);
 		igra.odigraj(poteza);
