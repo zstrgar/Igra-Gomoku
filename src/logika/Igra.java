@@ -17,6 +17,9 @@ public class Igra {
 	//Igralec (crn, bel), ki je trenutno na potezi
 	public Igralec naPotezi;
 	
+	// Pomožen seznam vseh vrst na plošèi.
+	private static final List<Vrsta> VRSTE = new LinkedList<Vrsta>();
+	
 /**
 * Nova igra, na zaèetku je prazna in na potezi je CRN.
 */
@@ -48,9 +51,41 @@ public class Igra {
 		return moznePoteze;
 	}
 	
+	/**
+	 * metoda cigavaVrsta(Vrsta vrsta) vrne igralca, ki ima zmagovalno vrsto (5vVrsto)
+	 * @param vrsta
+	 * @return IGrgalec (BEL ali CRN) ali null, èe ni zmagovalne vrste
+	 */
+	private Igralec cigavaVrsta(Vrsta vrsta) {
+		int count_BELO = 0;
+		int count_CRNO = 0;
+		for (int k = 0; k < 5 && (count_BELO == 0 || count_CRNO == 0); k++) {
+			switch (plosca[vrsta.x[k]][vrsta.y[k]]) {
+			case BELO: count_BELO += 1; break;
+			case CRNO: count_CRNO += 1; break;
+			case PRAZNO: break;
+			}
+		}
+		if (count_BELO == 5) { return Igralec.BEL; }
+		else if (count_CRNO == 5) { return Igralec.CRN; }
+		else { return null; }
+	}
 
 	/**
-	 * metoda veljavnostPoteze preveri, èe je poteza veljavna
+	 * metoda zmagovalnaVrsta() vrne zmagovalno vrsto (èe jo nek igralec ima)
+	 * @return zmagovalna vrsta, ali {@null}, èe je ni
+	 */
+	public Vrsta zmagovalnaVrsta() {
+		for (Vrsta vrsta : VRSTE) {
+			Igralec lastnik = cigavaVrsta(vrsta);
+			if (lastnik != null) return vrsta;
+		}
+		return null;
+	}
+	
+
+	/**
+	 * metoda veljavnostPoteze(Koordinati poteza) preveri, èe je poteza veljavna
 	 * preveri, èe je polje prazno in èe sta koordinati X in Y med 0 in 15
 	 * @param poteza
 	 * @return true èe je veljavna, false, èe ni
@@ -79,6 +114,8 @@ public class Igra {
 			return false;
 		}
 	}
+	
+	
 	
 	
 	
