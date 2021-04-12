@@ -55,13 +55,12 @@ public class Igra {
 	 * @param poteza
 	 * @return true èe je veljavna, false, èe ni
 	 */
-	public boolean veljavnostPoteze(Koordinati poteza) {
+	public boolean jeVeljavnaPoteza(Koordinati poteza) {   //NVM èe se sploh rabi to metodo
 		if (plosca[poteza.getX()][poteza.getY()] != Polje.PRAZNO) return false;
 		if (poteza.getX() < 0 || poteza.getX() > N) return false;
 		if (poteza.getY() < 0 || poteza.getY() > N) return false;
-		else return true;
+		return true;
 	}
-	
 	
 	
 	/**
@@ -71,7 +70,7 @@ public class Igra {
 	 * @return true, èe je polje prazno, false èe ni
 	 */
 	public boolean odigraj(Koordinati poteza) {
-		if (plosca[poteza.getX()][poteza.getY()] == Polje.PRAZNO) {
+		if (jeVeljavnaPoteza(poteza)) {
 			plosca[poteza.getX()][poteza.getY()] = naPotezi.getPolje();
 			naPotezi = naPotezi.nasprotnik();
 			return true;
@@ -80,6 +79,9 @@ public class Igra {
 			return false;
 		}
 	}
+	
+	
+	
 	
 	
 }
