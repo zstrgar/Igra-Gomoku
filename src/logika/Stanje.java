@@ -6,7 +6,7 @@ package logika;
 
 public enum Stanje {
 	V_TEKU,
-	ZMAGA_T,
-	ZMAGA_B,
+	ZMAGA_CRN,
+	ZMAGA_BEL,
 	NEODLOCENO;
 }

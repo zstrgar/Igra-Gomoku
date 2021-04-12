@@ -12,7 +12,7 @@ public class Igra {
 	public Igralec naPotezi;
 	
 /**
-* Nova igra, v zaèetni poziciji je prazna in na potezi je T.
+* Nova igra, v zaèetni poziciji je prazna in na potezi je CRN.
 */
 	
 	public Igra() {
@@ -22,7 +22,7 @@ public class Igra {
 				plosca[i][j] = Polje.PRAZNO;
 			}
 		}
-		naPotezi = Igralec.T;
+		naPotezi = Igralec.CRN;
 	}
 	
 /** 

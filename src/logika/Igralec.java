@@ -1,17 +1,19 @@
 package logika;
 
 /**
- * Možni igralci. (C - vrn, B - bel)
+ * Možni igralci.
  */
 
-public enum Igralec {
-	T, B;
+public enum Igralec {  //to je (poseben) razred enum
+		CRN, BEL;
 
 	public Igralec nasprotnik() {
-		return (this == T ? B : T);
+		if (this == CRN) return BEL;
+		else return CRN;
 	}
 
-	public Polje getPolje() {
-		return (this == T ? Polje.T : Polje.B);
+	public Polje getPolje() {  // s tem zvem, katero polje je igral igralec
+		if (this == CRN) return Polje.CRNO;
+		else return Polje.BELO;
 	}
 }
