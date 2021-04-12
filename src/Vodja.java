@@ -8,10 +8,13 @@ import logika.Igra;
 import logika.Igralec;
 import splosno.Koordinati;
 
+import logika.Igra;
+import logika.Igralec;
+import logika.Stanje;
 
 public class Vodja {
 	
-	private static enum VrstaIgralca{ R, C; }
+	private static enum VrstaIgralca{ RACUNALNIK, CLOVEK; }
 	
 	private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 	
@@ -20,23 +23,23 @@ public class Vodja {
 	public static void igramo() {
 		while(true) {
 			System.out.println("Nova igra. Prosim, da izberete:");
-			System.out.println(" 1 - B èlovek, T raèunalnik");
-			System.out.println(" 2 - B raèunalnik, T èlovek");
-			System.out.println(" 3 - B èlovek, T èlovek");
+			System.out.println(" 1 - BEL èlovek, ÈRN raèunalnik");
+			System.out.println(" 2 - BEL raèunalnik, ÈRN èlovek");
+			System.out.println(" 3 - BEL èlovek, ÈRN èlovek");
 			System.out.println(" 4 - izhod");
 			String s = r.readLine();
 			if (s.equals("1")) {
 				vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
-				vrstaIgralca.put(Igralec.B, VrstaIgralca.C); 
-				vrstaIgralca.put(Igralec.T, VrstaIgralca.R); 			
+				vrstaIgralca.put(Igralec.BEL, VrstaIgralca.CLOVEK); 
+				vrstaIgralca.put(Igralec.CRN, VrstaIgralca.RACUNALNIK); 			
 			} else if (s.equals("2")) {
 				vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
-				vrstaIgralca.put(Igralec.B, VrstaIgralca.R); 
-				vrstaIgralca.put(Igralec.T, VrstaIgralca.C); 			
+				vrstaIgralca.put(Igralec.BEL, VrstaIgralca.RACUNALNIK); 
+				vrstaIgralca.put(Igralec.CRN, VrstaIgralca.CLOVEK); 			
 			} else if (s.equals("3")) {
 				vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
-				vrstaIgralca.put(Igralec.B, VrstaIgralca.C); 
-				vrstaIgralca.put(Igralec.T, VrstaIgralca.C); 			
+				vrstaIgralca.put(Igralec.BEL, VrstaIgralca.CLOVEK); 
+				vrstaIgralca.put(Igralec.CRN, VrstaIgralca.CLOVEK); 			
 			} else if (s.equals("4")) {
 				System.out.println("Nasvidenje!");
 				break;
@@ -48,12 +51,12 @@ public class Vodja {
 			Igra igra = new Igra ();
 			igranje : while (true) {
 				switch (igra.stanje()) {
-				case ZMAGA_B: 
-					System.out.println("Zmagal je igralec B");
+				case ZMAGA_BEL: 
+					System.out.println("Zmagal je BEL igralec.");
 					System.out.println("Zmagovalna vrsta " + igra.zmagovalnaVrsta().toString());
 					break igranje;
-				case ZMAGA_T: 
-					System.out.println("Zmagal je igralec T");
+				case ZMAGA_CRN: 
+					System.out.println("Zmagal je ÈRN igralec.");
 					System.out.println("Zmagovalna vrsta " + igra.zmagovalnaVrsta().toString());
 					break igranje;
 				case NEODLOCENO: 
@@ -64,10 +67,10 @@ public class Vodja {
 					VrstaIgralca vrstaNaPotezi = vrstaIgralca.get(igralec);
 					Koordinati poteza = null;
 					switch (vrstaNaPotezi) {
-					case C: 
+					case CLOVEK: 
 						poteza = clovekovaPoteza(igra);
 						break;
-					case R:
+					case RACUNALNIK:
 						poteza = racunalnikovaPoteza(igra);
 						break;
 					}
