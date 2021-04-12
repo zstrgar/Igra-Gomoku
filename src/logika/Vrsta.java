@@ -2,6 +2,11 @@ package logika;
 
 import java.util.Arrays;
 
+/**
+ * vrsta x oziroma y koordinat, tvori se po potezah posameznega igralca, rabimo jih da bomo prepoznal, kdaj bo 5 v vrsto
+ *
+ */
+
 public class Vrsta {
 	
 	// Vrsta na plošèi je predstavljena z dvema tabelama dolžine N=15.

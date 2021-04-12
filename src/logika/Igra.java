@@ -22,10 +22,10 @@ public class Igra {
 	
 	static {
 		// Ta koda se izvede na zaèetku, ko se prviè požene program.
-		// Njena naloga je, da inicializira vrednosti statiènih
+		// Njena naloga je, da prepozna vrednosti statiènih
 		// spremenljivk.
 		
-		// Inicializiramo 5-vrste  (prepoznavanje, èe smo dobili 5 v vrsto)
+		// Prepoznavanje, èe smo dobili 5 v vrsto.
 		int[][] mozneSmeri = {{1,0}, {0,1}, {1,1}, {1,-1}};  //smer {1,0} -> desno, {0,1} -> gor, {1,1} -> desno gor, {1, -1} -> desno dol
 		for (int x = 0; x < N; x++) {
 			for (int y = 0; y < N; y++) {
@@ -35,7 +35,7 @@ public class Igra {
 					// èe je skrajno polje terice še na plošèi, jo dodamo med terice
 					if ((0 <= x + (5-1) * dx) && (x + (5-1) * dx < N) && 
 						(0 <= y + (5-1) * dy) && (y + (5-1) * dy < N)) {
-						int[] vrsta_x = new int[5];
+						int[] vrsta_x = new int[5];			//dolžina seznama je 5, ker igramo 5 v vrsto
 						int[] vrsta_y = new int[5];
 						for (int k = 0; k < 5; k++) {
 							vrsta_x[k] = x + dx * k;
