@@ -64,10 +64,10 @@ public class Igra {
 	
 	
 	/**
-	 * metoda odigraj(Koordinati poteza) vrne logièno vrednost 
-	 * spremeni vrednost igralca na potezi ter ga nastavi na nasprotnika
+	 * metoda odigraj(Koordinati poteza) najprej preveri, èe je poteza veljavna 
+	 * èe je, spremeni vrednost igralca na potezi ter ga nastavi na nasprotnika
 	 * @param poteza
-	 * @return true, èe je polje prazno, false èe ni
+	 * @return true, èe je poteza veljavna, false - èe ni
 	 */
 	public boolean odigraj(Koordinati poteza) {
 		if (jeVeljavnaPoteza(poteza)) {
