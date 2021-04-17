@@ -8,7 +8,7 @@ import splosno.Koordinati;
 
 public class Igra {
 	
-	//Velikost igralne plošèe
+	//Velikost igralne ploï¿½ï¿½e
 	public static final int N = 15;  //final, da je N fiksiran
 	
 	//Igralna plosca, ki sestoji iz polj(prazno, crno, belo)
@@ -17,25 +17,25 @@ public class Igra {
 	//Igralec (crn, bel), ki je trenutno na potezi
 	public Igralec naPotezi;
 	
-	// Pomožen seznam vseh vrst na plošèi.
+	// Pomoï¿½en seznam vseh vrst na ploï¿½ï¿½i.
 	private static final List<Vrsta> VRSTE = new LinkedList<Vrsta>();
 	
 	static {
-		// Ta koda se izvede na zaèetku, ko se prviè požene program.
-		// Njena naloga je, da prepozna vrednosti statiènih
+		// Ta koda se izvede na zaï¿½etku, ko se prviï¿½ poï¿½ene program.
+		// Njena naloga je, da prepozna vrednosti statiï¿½nih
 		// spremenljivk.
 		
-		// Prepoznavanje, èe smo dobili 5 v vrsto.
+		// Prepoznavanje, ï¿½e smo dobili 5 v vrsto.
 		int[][] mozneSmeri = {{1,0}, {0,1}, {1,1}, {1,-1}};  //smer {1,0} -> desno, {0,1} -> gor, {1,1} -> desno gor, {1, -1} -> desno dol
 		for (int x = 0; x < N; x++) {
 			for (int y = 0; y < N; y++) {
 				for (int[] smer : mozneSmeri) {
 					int dx = smer[0];	//premik v x smeri (desno, levo)
 					int dy = smer[1];	//premik v y smeri (gor,dol)
-					// èe je skrajno polje terice še na plošèi, jo dodamo med terice
+					// ï¿½e je skrajno polje terice ï¿½e na ploï¿½ï¿½i, jo dodamo med terice
 					if ((0 <= x + (5-1) * dx) && (x + (5-1) * dx < N) && 
 						(0 <= y + (5-1) * dy) && (y + (5-1) * dy < N)) {
-						int[] vrsta_x = new int[5];			//dolžina seznama je 5, ker igramo 5 v vrsto
+						int[] vrsta_x = new int[5];			//dolï¿½ina seznama je 5, ker igramo 5 v vrsto
 						int[] vrsta_y = new int[5];
 						for (int k = 0; k < 5; k++) {
 							vrsta_x[k] = x + dx * k;
@@ -50,7 +50,7 @@ public class Igra {
 	
 	
 /**
-* Nova igra, na zaèetku je prazna in na potezi je CRN.
+* Nova igra, na zaï¿½etku je prazna in na potezi je CRN.
 */
 	public Igra() {  				//konstruktor
 		
@@ -61,12 +61,18 @@ public class Igra {
 			}
 		}
 		
-		naPotezi = Igralec.CRN;
+		naPotezi = Igralec.BEL;
 	}
 	
+		/**
+	 * @return igralna plosca
+	 */
+	public Polje[][] getPlosca () {
+		return plosca;
+	}
 	
 	/**
-	 * metoda moznePoteze() vrne seznam List<Koordinati> možnih potez 
+	 * metoda moznePoteze() vrne seznam List<Koordinati> moï¿½nih potez 
 	 * @return moznePoteze
 	 */
 	public List<Koordinati> moznePoteze() {
@@ -84,7 +90,7 @@ public class Igra {
 	/**
 	 * metoda cigavaVrsta(Vrsta vrsta) vrne igralca, ki ima zmagovalno vrsto (5vVrsto)
 	 * @param vrsta
-	 * @return IGrgalec (BEL ali CRN) ali null, èe ni zmagovalne vrste
+	 * @return IGrgalec (BEL ali CRN) ali null, ï¿½e ni zmagovalne vrste
 	 */
 	private Igralec cigavaVrsta(Vrsta vrsta) {
 		int count_BELO = 0;
@@ -102,8 +108,8 @@ public class Igra {
 	}
 
 	/**
-	 * metoda zmagovalnaVrsta() vrne zmagovalno vrsto (èe jo nek igralec ima)
-	 * @return zmagovalna vrsta, ali {@null}, èe je ni
+	 * metoda zmagovalnaVrsta() vrne zmagovalno vrsto (ï¿½e jo nek igralec ima)
+	 * @return zmagovalna vrsta, ali {@null}, ï¿½e je ni
 	 */
 	public Vrsta zmagovalnaVrsta() {
 		for (Vrsta vrsta : VRSTE) {
@@ -128,25 +134,25 @@ public class Igra {
 			case PRAZNO: assert false;
 			}
 		}
-		// Ali imamo kakšno prazno polje?
-		// Èe ga imamo, igre ni konec in je nekdo na potezi
+		// Ali imamo kakï¿½no prazno polje?
+		// ï¿½e ga imamo, igre ni konec in je nekdo na potezi
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				if (plosca[i][j] == Polje.PRAZNO) return Stanje.V_TEKU;
 			}
 		}
-		// Polje je polno, rezultat je neodloèen
+		// Polje je polno, rezultat je neodloï¿½en
 		return Stanje.NEODLOCENO;
 	}
 	
 
 	/**
-	 * metoda veljavnostPoteze(Koordinati poteza) preveri, èe je poteza veljavna
-	 * preveri, èe je polje prazno in èe sta koordinati X in Y med 0 in 15
+	 * metoda veljavnostPoteze(Koordinati poteza) preveri, ï¿½e je poteza veljavna
+	 * preveri, ï¿½e je polje prazno in ï¿½e sta koordinati X in Y med 0 in 15
 	 * @param poteza
-	 * @return true èe je veljavna, false, èe ni
+	 * @return true ï¿½e je veljavna, false, ï¿½e ni
 	 */
-	public boolean jeVeljavnaPoteza(Koordinati poteza) {   //NVM èe se sploh rabi to metodo
+	public boolean jeVeljavnaPoteza(Koordinati poteza) {   //NVM ï¿½e se sploh rabi to metodo
 		if (plosca[poteza.getX()][poteza.getY()] != Polje.PRAZNO) return false;
 		if (poteza.getX() < 0 || poteza.getX() > N) return false;
 		if (poteza.getY() < 0 || poteza.getY() > N) return false;
@@ -155,10 +161,10 @@ public class Igra {
 	
 	
 	/**
-	 * metoda odigraj(Koordinati poteza) najprej preveri, èe je poteza veljavna 
-	 * èe je, spremeni vrednost igralca na potezi ter ga nastavi na nasprotnika
+	 * metoda odigraj(Koordinati poteza) najprej preveri, ï¿½e je poteza veljavna 
+	 * ï¿½e je, spremeni vrednost igralca na potezi ter ga nastavi na nasprotnika
 	 * @param poteza
-	 * @return true, èe je poteza veljavna, false - èe ni
+	 * @return true, ï¿½e je poteza veljavna, false - ï¿½e ni
 	 */
 	public boolean odigraj(Koordinati poteza) {
 		if (jeVeljavnaPoteza(poteza)) {

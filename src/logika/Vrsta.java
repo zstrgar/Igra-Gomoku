@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Vrsta {
 	
-	// Vrsta na plošèi je predstavljena z dvema tabelama dolžine N=15.
+	// Vrsta na ploï¿½ï¿½i je predstavljena z dvema tabelama dolï¿½ine N=15.
 		// To sta tabeli x in y koordinat.
 	public int[] x;
 	public int[] y;
