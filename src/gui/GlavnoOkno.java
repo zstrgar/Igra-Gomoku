@@ -30,10 +30,10 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	private JLabel status;
 	
 	// Izbire v menuju
-	private JMenuItem igraClovekRacunalnik;
-	private JMenuItem igraRacunalnikClovek;
-	private JMenuItem igraClovekClovek;
-	private JMenuItem igraRacunalnikRacunalnik;
+	private JMenuItem menuClovekRacunalnik, menuRacunalnikClovek, menuClovekClovek, menuRacunalnikRacunalnik;
+	private JMenuItem menuVelikostIgre, menuImeIgralca, menuAlgoritem, menuCasPoteze;
+	private JMenuItem menuBarvaZetonov, menuBarvaPolja;
+	
 
 	/**
 	 * Ustvari novo glavno okno in prični igrati igro.
@@ -46,35 +46,37 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	
 		// menu
 		JMenuBar menu_bar = new JMenuBar();
-		this.setJMenuBar(menu_bar);
-		JMenu igra_menu = new JMenu("Nova igra");
-		menu_bar.add(igra_menu);
+		setJMenuBar(menu_bar);
 
-		igraClovekRacunalnik = new JMenuItem("Človek – računalnik");
-		igra_menu.add(igraClovekRacunalnik);
-		igraClovekRacunalnik.addActionListener(this);
-		
-		igraRacunalnikClovek = new JMenuItem("Računalnik – človek");
-		igra_menu.add(igraRacunalnikClovek);
-		igraRacunalnikClovek.addActionListener(this);
-		
-		igraClovekClovek = new JMenuItem("Človek – človek");
-		igra_menu.add(igraClovekClovek);
-		igraClovekClovek.addActionListener(this);
-		
-		igraRacunalnikRacunalnik = new JMenuItem("Računalnik – računalnik");
-		igra_menu.add(igraRacunalnikRacunalnik);
-		igraRacunalnikRacunalnik.addActionListener(this);
+		JMenu menuIgra = dodajMenu(menu_bar, "Igra");
+		JMenu menuNastavitve = dodajMenu(menu_bar, "Nastavitve");
+		JMenu menuPolje = dodajMenu(menu_bar, "Polje");
 
+		menuClovekRacunalnik = dodajMenuItem(menuIgra, "Človek – računalnik");
+		menuRacunalnikClovek = dodajMenuItem(menuIgra, "Računalnik – človek");
+		menuClovekClovek = dodajMenuItem(menuIgra, "Človek – človek");
+		menuRacunalnikRacunalnik = dodajMenuItem(menuIgra, "Računalnik – računalnik");
+		
+		menuVelikostIgre = dodajMenuItem(menuNastavitve, "Velikost igre...");
+		menuImeIgralca = dodajMenuItem(menuNastavitve, "Ime igralca...");
+		menuAlgoritem = dodajMenuItem(menuNastavitve, "Algoritem...");
+		menuCasPoteze = dodajMenuItem(menuNastavitve, "Nastavi čas poteze ...");
+		
+		menuBarvaZetonov = dodajMenuItem(menuPolje, "Barva žetonov ...");
+		menuBarvaPolja = dodajMenuItem(menuPolje, "Barva polja ...");
+		
+		
+		
 		// igralno polje
 		polje = new IgralnoPolje();
 
 		GridBagConstraints polje_layout = new GridBagConstraints();
 		polje_layout.gridx = 0;
 		polje_layout.gridy = 0;
+		polje_layout.anchor = GridBagConstraints.CENTER;  //tole sem mislila, da bi lahko dalo na sredo, ampak ni :(
 		polje_layout.fill = GridBagConstraints.BOTH;
-		polje_layout.weightx = 1.0;
-		polje_layout.weighty = 1.0;
+		polje_layout.weightx = 0;	//ko je na 0, je centriran; ko je na 1 se povečuje z oknom
+		polje_layout.weighty = 0;	
 		getContentPane().add(polje, polje_layout);
 		
 		// statusna vrstica za sporočila
@@ -90,24 +92,45 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		
 	}
 	
+	/**
+	 * Pomožni metudi dodajMenu in dodajMenuItem za kontruiranje menuja
+	 * @param menubar
+	 * @param naslov
+	 * @return JMenu
+	 */
+	public JMenu dodajMenu(JMenuBar menu_bar, String naslov) {
+		JMenu menu = new JMenu(naslov);
+		menu_bar.add(menu);
+		return menu;
+	}
+	
+	public JMenuItem dodajMenuItem(JMenu menu, String naslov) {
+		JMenuItem menuitem = new JMenuItem(naslov);
+		menu.add(menuitem);
+		menuitem.addActionListener(this);
+		return menuitem;		
+	}
+	
+
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == igraClovekRacunalnik) {
+		if (e.getSource() == menuClovekRacunalnik) {
 			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.C); 
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.R);
 			Vodja.igramoNovoIgro();
-		} else if (e.getSource() == igraRacunalnikClovek) {
+		} else if (e.getSource() == menuRacunalnikClovek) {
 			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.R); 
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.C);
 			Vodja.igramoNovoIgro();
-		} else if (e.getSource() == igraClovekClovek) {
+		} else if (e.getSource() == menuClovekClovek) {
 			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.C); 
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.C);
 			Vodja.igramoNovoIgro();
-		} else if (e.getSource() == igraRacunalnikRacunalnik) {
+		} else if (e.getSource() == menuRacunalnikRacunalnik) {
 			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.R); 
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.R);
