@@ -7,11 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EnumMap;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import logika.Igralec;
 import vodja.Vodja;
@@ -114,27 +117,51 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == menuClovekRacunalnik) {
+	public void actionPerformed(ActionEvent event) {
+		Object source = event.getSource();
+		if (source == menuClovekRacunalnik) {
 			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.C); 
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.R);
 			Vodja.igramoNovoIgro();
-		} else if (e.getSource() == menuRacunalnikClovek) {
+		} else if (source == menuRacunalnikClovek) {
 			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.R); 
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.C);
 			Vodja.igramoNovoIgro();
-		} else if (e.getSource() == menuClovekClovek) {
+		} else if (source == menuClovekClovek) {
 			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.C); 
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.C);
 			Vodja.igramoNovoIgro();
-		} else if (e.getSource() == menuRacunalnikRacunalnik) {
+		} else if (source == menuRacunalnikRacunalnik) {
 			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.R); 
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.R);
 			Vodja.igramoNovoIgro();
+		} else if (source == menuVelikostIgre) {
+			JTextField velikostN = new JTextField();
+			JTextField vVrsto = new JTextField();
+			JComponent[] polja = {
+					new JLabel("Vnesi velikost igre N:"), velikostN,
+					new JLabel("Vnesi stevilo zetonov:"), vVrsto,
+			};
+			int izbira = JOptionPane.showConfirmDialog(this,  polja, "Input", JOptionPane.OK_CANCEL_OPTION);
+			if (izbira == JOptionPane.OK_OPTION && velikostN.getText().matches("\\d+") && vVrsto.getText().matches("\\d+")) {
+				//TODO dokončaj....., pomoje se rabi naštimat da se nekje lahko naszavi velikost itd.
+				
+			}
+			
+		} else if (source == menuImeIgralca) {
+			
+		} else if (source == menuAlgoritem) {
+			
+		} else if (source == menuCasPoteze) {
+			
+		} else if (source == menuBarvaZetonov) {
+			
+		} else if (source == menuBarvaPolja) {
+			
 		}
 	}
 
