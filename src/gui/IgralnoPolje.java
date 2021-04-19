@@ -18,6 +18,21 @@ import splosno.Koordinati;
 import vodja.Vodja;;
 
 /**
+ *  TODO
+ *  1. plosca na sredino
+ *  2. menu
+ *  	1. nastavljiva velikost igralne plošče
+ *  	2. lastnosti igralcev (ime, človek ali računalnik, kateri algoritem uporablja računalnik, ...), 
+ *   	3. lastnosti grafičnega vmesnika (barve žetonov, ...), 
+ *  	4. koliko časa naj preteče, preden računalnik odigra potezo ....
+ *  3. lepša plošča
+ *  4. (polepšaj kodo, komentarji)
+ */
+
+
+
+
+/**
  *  Risanje plošče
  */
 //@SuppressWarnings("serial")
