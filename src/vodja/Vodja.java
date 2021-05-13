@@ -42,7 +42,7 @@ public class Vodja {
 		case NEODLOCENO: 
 			return; // odhajamo iz metode igramo
 		case V_TEKU: 
-			Igralec igralec = igra.naPotezi;
+			Igralec igralec = igra.igralecNaPotezi;
 			VrstaIgralca vrstaNaPotezi = vrstaIgralca.get(igralec);
 			switch (vrstaNaPotezi) {
 			case C: 

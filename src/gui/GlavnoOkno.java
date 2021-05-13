@@ -173,8 +173,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			switch(Vodja.igra.stanje()) {
 			case NEODLOCENO: status.setText("Neodločeno!"); break;
 			case V_TEKU: 
-				status.setText("Na potezi je " + Vodja.igra.naPotezi + 
-						" - " + Vodja.vrstaIgralca.get(Vodja.igra.naPotezi)); 
+				status.setText("Na potezi je " + Vodja.igra.igralecNaPotezi + 
+						" - " + Vodja.vrstaIgralca.get(Vodja.igra.igralecNaPotezi)); 
 				break;
 			case ZMAGA_BEL: 
 				status.setText("Zmagal je BEL - " + 

@@ -1,7 +1,7 @@
 package logika;
 
 /**
- * Mona stanja igre.
+ * Mozna stanja igre.
  */
 
 public enum Stanje {

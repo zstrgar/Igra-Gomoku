@@ -1,10 +1,19 @@
 package inteligenca;
 
-public class Inteligenca {  //podrazred razreda splosno.KdoIgra
-	
-/** 
- * TODO
- * public Koordinati izberiPotezo(Igra igra)  //5 sekund!
- */
+import logika.Igra;
 
+import splosno.KdoIgra;
+import splosno.Koordinati;
+
+public class Inteligenca extends KdoIgra{  //podrazred razreda splosno.KdoIgra
+	
+	public Inteligenca() {
+		super("Algebros");  // ime skupine
+	}
+
+	// TODO !! ***********************************************************************
+	public Koordinati izberiPotezo(Igra igra) {
+		return null;
+		
+	}
 }

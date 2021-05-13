@@ -1,15 +1,15 @@
 package logika;
 
 /**
- * Možni igralci.
+ * Mozni igralci.
  */
 
-public enum Igralec {  //to je (poseben) razred enum
+public enum Igralec {  
 		CRN, BEL;
 	
 	/**
 	 * metoda nasprotnik() vrne Igralca nasprotnika
-	 * @return èe je trenutni igralec BEL, vrne CRN
+	 * @return ce je trenutni igralec BEL, vrne CRN
 	 */
 	public Igralec nasprotnik() {
 		if (this == CRN) return BEL;
