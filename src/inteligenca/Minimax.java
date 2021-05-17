@@ -18,7 +18,7 @@ public class Minimax extends Inteligenca {
 	private int globina;
 	
 	public Minimax (int globina) {
-		super("minimax globina " + globina);
+		super();
 		this.globina = globina;
 	}
 	

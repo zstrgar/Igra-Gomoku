@@ -3,6 +3,7 @@ package vodja;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import logika.Igra;
 import logika.Igralec;
@@ -11,6 +12,7 @@ import splosno.Koordinati;
 import javax.swing.SwingWorker;
 
 import gui.GlavnoOkno;
+import inteligenca.Inteligenca;
 
 
 public class Vodja {
@@ -56,6 +58,8 @@ public class Vodja {
 	}
 	
 	private static Random random = new Random ();
+	
+	private static Inteligenca racunalnikovaInteligenca = new Minimax(3);
 
 	// swing worker
 	public static void racunalnikovaPoteza() {
@@ -63,10 +67,12 @@ public class Vodja {
 		SwingWorker<Koordinati, Void> worker = new SwingWorker<Koordinati, Void> () {
 			@Override
 			protected Koordinati doInBackground() {
-				// try {TimeUnit.SECONDS.sleep(2);} catch (Exception e) {};
-				List<Koordinati> moznePoteze = igra.moznePoteze();
-				int randomIndex = random.nextInt(moznePoteze.size());
-				return moznePoteze.get(randomIndex);
+				Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra)
+				try {TimeUnit.SECONDS.sleep(2);} catch (Exception e) {};
+				// List<Koordinati> moznePoteze = igra.moznePoteze();
+				//int randomIndex = random.nextInt(moznePoteze.size());
+				//return moznePoteze.get(randomIndex);
+				return poteza;
 			}
 			@Override
 			protected void done () {
