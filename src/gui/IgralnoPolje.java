@@ -105,7 +105,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		}
 		if (vrsta != null) {
 			g2.setColor(new Color(255, 255, 196));
-			for (int k = 0; k < 5; k++) {
+			for (int k = 0; k < Igra.M; k++) {
 				int i = vrsta.x[k];
 				int j = vrsta.y[k];
 				g2.fillRect((int)(w * i), (int)(w * j), (int)w, (int)w);
