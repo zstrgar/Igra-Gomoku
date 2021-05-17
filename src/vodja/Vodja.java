@@ -13,6 +13,7 @@ import javax.swing.SwingWorker;
 
 import gui.GlavnoOkno;
 import inteligenca.Inteligenca;
+import inteligenca.Minimax;
 
 
 public class Vodja {
@@ -67,7 +68,7 @@ public class Vodja {
 		SwingWorker<Koordinati, Void> worker = new SwingWorker<Koordinati, Void> () {
 			@Override
 			protected Koordinati doInBackground() {
-				Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra)
+				Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra);
 				try {TimeUnit.SECONDS.sleep(2);} catch (Exception e) {};
 				// List<Koordinati> moznePoteze = igra.moznePoteze();
 				//int randomIndex = random.nextInt(moznePoteze.size());
