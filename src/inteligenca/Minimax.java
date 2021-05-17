@@ -28,28 +28,42 @@ public class Minimax extends Inteligenca {
 		return najboljsaPoteza.poteza;	
 	}
 	
-	// vrne najboljso ocenjeno potezo z vidike igralca jaz
+	/**
+	 * vrne najboljso ocenjeno potezo z vidika igralca jaz
+	 * @param igra
+	 * @param globina
+	 * @param jaz (igralec)
+	 * @return najboljsa poteza skupaj z oceno poteze
+	 */
 	public OcenjenaPozicija minimax(Igra igra, int globina, Igralec jaz) {
+		// Na začetku še ni najboljše poteze.
 		OcenjenaPozicija najboljsaPoteza = null;
+		
 		List<Koordinati> moznePoteze = igra.moznePoteze();
 		for (Koordinati p: moznePoteze) {
+			// Ustvarimo kopijo igre na kateri igramo in poiskušamo najti najboljšo potezo.
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.odigraj (p);
+			
 			int ocena;
+			
+			// Ugotovimo, ali je konec, ali je kdo na potezi.
 			switch (kopijaIgre.stanje()) {
 			case ZMAGA_BEL: ocena = (jaz == Igralec.BEL ? ZMAGA : PORAZ); break;
 			case ZMAGA_CRN: ocena = (jaz == Igralec.CRN ? ZMAGA : PORAZ); break;
 			case NEODLOCENO: ocena = NEODLOC; break;
 			default:
-				// nekdo je na potezi
+				// Nekdo je na potezi.
 				if (globina == 1) ocena = OceniPozicijo.oceniPozicijo(kopijaIgre, jaz);
-				// globina > 1
+				// Če je globina > 1, rekurzivno naredi minimax.
 				else ocena = minimax(kopijaIgre, globina-1, jaz).ocena;	
 			}
+			
+			// Če ni kandidata za najboljšo potezo:
 			if (najboljsaPoteza == null 
-					// max, če je p moja poteza
+					// maximiziramo, če je p moja poteza
 					|| jaz == igra.igralecNaPotezi() && ocena > najboljsaPoteza.ocena
-					// sicer min 
+					// sicer minimiziramo 
 					|| jaz != igra.igralecNaPotezi() && ocena < najboljsaPoteza.ocena)
 				najboljsaPoteza = new OcenjenaPozicija(p, ocena);		
 		}
