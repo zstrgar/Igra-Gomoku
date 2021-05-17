@@ -60,7 +60,7 @@ public class Vodja {
 	
 	private static Random random = new Random ();
 	
-	private static Inteligenca racunalnikovaInteligenca = new Minimax(5);
+	private static Inteligenca racunalnikovaInteligenca = new Minimax(3);
 
 	// swing worker
 	public static void racunalnikovaPoteza() {

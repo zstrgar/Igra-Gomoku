@@ -38,7 +38,7 @@ public class Igra {
 					// Če je skrajno polje terice že na plošči, jo dodamo med terice
 					if ((0 <= x + (M-1) * dx) && (x + (M-1) * dx < N) && 
 						(0 <= y + (M-1) * dy) && (y + (M-1) * dy < N)) {
-						int[] vrsta_x = new int[M];			//dolžina seznama je 5, ker igramo 5 v vrsto
+						int[] vrsta_x = new int[M];			//dolžina seznama je M, ker igramo M v vrsto
 						int[] vrsta_y = new int[M];
 						for (int k = 0; k < M; k++) {
 							vrsta_x[k] = x + dx * k;
