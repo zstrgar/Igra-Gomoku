@@ -9,7 +9,7 @@ import splosno.Koordinati;
 public class Igra {
 	
 	//Velikost igralne plošče
-	public static final int N = 3;  //final, da je N fiksiran
+	public static final int N = 4;  //final, da je N fiksiran
 	
 	//Koliko žetonov želimo imeti v vrsti, da zmagamo
 	public static final int M = 3;
@@ -28,7 +28,7 @@ public class Igra {
 		// Njena naloga je, da prepozna vrednosti statičnih
 		// spremenljivk.
 		
-		// Prepoznavanje, če smo dobili 5 v vrsto.
+		// Prepoznavanje, če smo dobili M v vrsto.
 		int[][] mozneSmeri = {{1,0}, {0,1}, {1,1}, {1,-1}};  //smer {1,0} -> desno, {0,1} -> gor, {1,1} -> desno gor, {1, -1} -> desno dol
 		for (int x = 0; x < N; x++) {
 			for (int y = 0; y < N; y++) {

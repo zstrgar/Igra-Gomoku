@@ -60,7 +60,7 @@ public class Vodja {
 	
 	private static Random random = new Random ();
 	
-	private static Inteligenca racunalnikovaInteligenca = new Minimax(3);
+	private static Inteligenca racunalnikovaInteligenca = new Minimax(5);
 
 	// swing worker
 	public static void racunalnikovaPoteza() {
@@ -70,7 +70,7 @@ public class Vodja {
 			protected Koordinati doInBackground() {
 				Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra);
 				try {TimeUnit.SECONDS.sleep(2);} catch (Exception e) {};
-				// List<Koordinati> moznePoteze = igra.moznePoteze();
+				// List<Koordinati> moznePoteze = igra.moznePoteze();        // tole se nuca za "algoritem" random, ko rač. random izbira svoje poteze
 				//int randomIndex = random.nextInt(moznePoteze.size());
 				//return moznePoteze.get(randomIndex);
 				return poteza;

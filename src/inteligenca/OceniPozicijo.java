@@ -21,7 +21,7 @@ public class OceniPozicijo {
 		Polje[][] plosca = igra.getPlosca();
 		int count_CRNO = 0;
 		int count_BELO = 0;
-		for (int k = 0; k < Igra.N && (count_CRNO == 0 || count_BELO == 0); k++) {
+		for (int k = 0; k < Igra.M && (count_CRNO == 0 || count_BELO == 0); k++) {
 			switch (plosca[vrsta.x[k]][vrsta.y[k]]){
 			case BELO: count_BELO += 1; break;
 			case CRNO: count_CRNO += 1; break;
