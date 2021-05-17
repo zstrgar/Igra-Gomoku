@@ -9,7 +9,7 @@ import splosno.Koordinati;
 public class Igra {
 	
 	//Velikost igralne plošče
-	public static final int N = 5;  //final, da je N fiksiran
+	public static final int N = 3;  //final, da je N fiksiran
 	
 	//Koliko žetonov želimo imeti v vrsti, da zmagamo
 	public static final int M = 3;
