@@ -7,12 +7,10 @@ import logika.Igralec;
 
 import splosno.Koordinati;
 
-import inteligenca.OceniPozicijo;
-
 public class Minimax extends Inteligenca {
 	
 	private static final int ZMAGA = 100; // vrednost zmage
-	private static final int PORAZ = -ZMAGA;  // vrednost izgube
+	private static final int PORAZ = -ZMAGA;  // vrednost poraza
 	private static final int NEODLOC = 0;  // vrednost neodločene igre	
 	
 	private int globina;
@@ -29,7 +27,7 @@ public class Minimax extends Inteligenca {
 	}
 	
 	/**
-	 * vrne najboljso ocenjeno potezo z vidika igralca jaz
+	 * Vrne najboljso ocenjeno potezo z vidika igralca jaz
 	 * @param igra
 	 * @param globina
 	 * @param jaz (igralec)
@@ -39,6 +37,7 @@ public class Minimax extends Inteligenca {
 		// Na začetku še ni najboljše poteze.
 		OcenjenaPozicija najboljsaPoteza = null;
 		
+		//Med vsemi možnimi potezami iščemo najboljšo.
 		List<Koordinati> moznePoteze = igra.moznePoteze();
 		for (Koordinati p: moznePoteze) {
 			// Ustvarimo kopijo igre na kateri igramo in poiskušamo najti najboljšo potezo.
@@ -55,12 +54,12 @@ public class Minimax extends Inteligenca {
 			default:
 				// Nekdo je na potezi.
 				if (globina == 1) ocena = OceniPozicijo.oceniPozicijo(kopijaIgre, jaz);
-				// Če je globina > 1, rekurzivno naredi minimax.
+				// Če je globina > 1, rekurzivno naredimo minimax.
 				else ocena = minimax(kopijaIgre, globina-1, jaz).ocena;	
 			}
 			
 			// Če ni kandidata za najboljšo potezo:
-			if (najboljsaPoteza == null 
+			if (najboljsaPoteza == null
 					// maximiziramo, če je p moja poteza
 					|| jaz == igra.igralecNaPotezi() && ocena > najboljsaPoteza.ocena
 					// sicer minimiziramo 
