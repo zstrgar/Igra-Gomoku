@@ -12,8 +12,9 @@ public class Inteligenca extends KdoIgra{  //podrazred razreda splosno.KdoIgra
 	}
 
 	// TODO !! ***********************************************************************
+	
 	public Koordinati izberiPotezo(Igra igra) {
 		return null;
-		
 	}
+
 }
