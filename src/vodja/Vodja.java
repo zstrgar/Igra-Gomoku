@@ -14,6 +14,7 @@ import javax.swing.SwingWorker;
 import gui.GlavnoOkno;
 import inteligenca.Inteligenca;
 import inteligenca.Minimax;
+import inteligenca.RandomMinimax;
 
 
 public class Vodja {
@@ -60,7 +61,7 @@ public class Vodja {
 	
 	private static Random random = new Random ();
 	
-	private static Inteligenca racunalnikovaInteligenca = new Minimax(3);
+	private static Inteligenca racunalnikovaInteligenca = new RandomMinimax(5);
 
 	// swing worker
 	public static void racunalnikovaPoteza() {
