@@ -12,6 +12,7 @@ import splosno.Koordinati;
 import javax.swing.SwingWorker;
 
 import gui.GlavnoOkno;
+import inteligenca.Alphabeta;
 import inteligenca.Inteligenca;
 import inteligenca.Minimax;
 import inteligenca.RandomMinimax;
@@ -61,7 +62,7 @@ public class Vodja {
 	
 	private static Random random = new Random ();
 	
-	private static Inteligenca racunalnikovaInteligenca = new RandomMinimax(5);
+	private static Inteligenca racunalnikovaInteligenca = new Alphabeta(5);
 
 	// swing worker
 	public static void racunalnikovaPoteza() {
