@@ -29,6 +29,8 @@ import vodja.Vodja;;
  *  4. (polepšaj kodo, komentarji)
  */
 
+//TODO: ustrezna prilagoditev žetonov in plošče ob povečanje/pomanjšanju okna
+
 
 
 
