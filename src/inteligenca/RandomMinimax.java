@@ -34,7 +34,7 @@ public class RandomMinimax extends Inteligenca {
 	}
 	
 	/**
-	 * Metoda najboljsePozicije vrne seznam vseh potez, ki imajo največjo vrednost z vidika trenutnega igralca na potezi
+	 * Metoda najboljsePozicije vrne seznam vseh pozicij, ki imajo največjo vrednost z vidika trenutnega igralca na potezi
 	 * @param igra
 	 * @param globina
 	 * @return Seznam Ocenjenih pozicij igre
