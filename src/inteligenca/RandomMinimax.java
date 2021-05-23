@@ -51,7 +51,8 @@ public class RandomMinimax extends Inteligenca {
 			case ZMAGA_CRN: ocena = ZMAGA; break; // poteza je zmagovalna poteza
 			case NEODLOCENO: ocena = NEODLOC; break;
 			default: //nekdo je na potezi
-				if (globina==1) ocena = OceniPozicijo.oceniPozicijo(kopijaIgre,igra.igralecNaPotezi());
+				OcenjevalecPozicije ocenjevalecPozicije = new OcenjevalecPozicije();
+				if (globina==1) ocena = ocenjevalecPozicije.oceniPozicijo(kopijaIgre,igra.igralecNaPotezi());
 				else ocena = -najboljsePozicije(kopijaIgre,globina-1).get(0).ocena;   //negacija ocene z vidika nasportnika
 			}
 			najboljsePozicije.addIfBest(new OcenjenaPozicija(poteza, ocena));			

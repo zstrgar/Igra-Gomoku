@@ -8,7 +8,7 @@ public class OcenjenaPozicija {
 	int ocena;
 	
 	/**
-	 * OcenjenaPozicija nosi podatek o potezi z oceno 
+	 * OcenjenaPozicija nosi podatek o poziciji z oceno 
 	 * @param poteza
 	 * @param ocena
 	 */

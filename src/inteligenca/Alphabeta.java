@@ -7,7 +7,7 @@ import logika.Igralec;
 
 import splosno.Koordinati;
 
-import inteligenca.OceniPozicijo;
+import inteligenca.OcenjevalecPozicije;
 
 public class Alphabeta extends Inteligenca {
 	
@@ -33,8 +33,10 @@ public class Alphabeta extends Inteligenca {
 		// Če sem računalnik, maksimiramo oceno z začetno oceno ZGUBA
 		// Če sem pa človek, minimiziramo oceno z začetno oceno ZMAGA
 		if (igra.igralecNaPotezi() == jaz) {ocena = ZGUBA;} else {ocena = ZMAGA;}
+		
 		List<Koordinati> moznePoteze = igra.moznePoteze();
 		Koordinati kandidat = moznePoteze.get(0); // Možno je, da se ne spremini vrednost kanditata. Zato ne more biti null.
+		
 		for (Koordinati p: moznePoteze) {
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.odigraj (p);
@@ -45,7 +47,8 @@ public class Alphabeta extends Inteligenca {
 			case NEODLOCENO: ocenap = NEODLOC; break;
 			default:
 				// Nekdo je na potezi
-				if (globina == 1) ocenap = OceniPozicijo.oceniPozicijo(kopijaIgre, jaz);
+				OcenjevalecPozicije ocenjevalecPozicije = new OcenjevalecPozicije();
+				if (globina == 1) ocenap = ocenjevalecPozicije.oceniPozicijo(kopijaIgre, jaz);
 				else ocenap = alphabetaPoteze (kopijaIgre, globina-1, alpha, beta, jaz).ocena;
 			}
 			if (igra.igralecNaPotezi() == jaz) { // Maksimiramo oceno
