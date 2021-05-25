@@ -1,6 +1,8 @@
 package inteligenca;
 
 import java.util.List;
+import java.util.Set;
+
 import logika.Igra;
 import logika.Igralec;
 import splosno.Koordinati;
@@ -37,7 +39,7 @@ public class Minimax extends Inteligenca {
     OcenjenaPozicija najboljsaPoteza = null;
 
     //Med vsemi možnimi potezami iščemo najboljšo.
-    List<Koordinati> moznePoteze = igra.moznePoteze();
+    Set<Koordinati> moznePoteze = igra.moznePoteze();
     for (Koordinati p : moznePoteze) {
       // Ustvarimo kopijo igre na kateri igramo in poiskušamo najti najboljšo potezo.
       Igra kopijaIgre = new Igra(igra);

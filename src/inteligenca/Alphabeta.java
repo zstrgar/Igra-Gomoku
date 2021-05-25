@@ -1,6 +1,7 @@
 package inteligenca;
 
 import java.util.List;
+import java.util.Set;
 
 import logika.Igra;
 import logika.Igralec;
@@ -32,8 +33,8 @@ public class Alphabeta extends Inteligenca {
 		// Če sem pa človek, minimiziramo oceno z začetno oceno ZMAGA
 		if (igra.igralecNaPotezi() == jaz) {ocena = ZGUBA;} else {ocena = ZMAGA;}
 		
-		List<Koordinati> moznePoteze = igra.moznePoteze();
-		Koordinati kandidat = moznePoteze.get(0); // Možno je, da se ne spremini vrednost kanditata. Zato ne more biti null.
+		Set<Koordinati> moznePoteze = igra.moznePoteze();
+		Koordinati kandidat = moznePoteze.iterator().next(); // Možno je, da se ne spremini vrednost kanditata. Zato ne more biti null.
 		
 		for (Koordinati p: moznePoteze) {
 			Igra kopijaIgre = new Igra(igra);
@@ -45,16 +46,19 @@ public class Alphabeta extends Inteligenca {
 			case NEODLOCENO: ocenap = NEODLOC; break;
 			default:
 				// Nekdo je na potezi
+				
 				OcenjevalecPozicije ocenjevalecPozicije = new OcenjevalecPozicije();
 				if (globina == 1) ocenap = ocenjevalecPozicije.oceniPozicijo(kopijaIgre, jaz);
 				else ocenap = alphabetaPoteze (kopijaIgre, globina-1, alpha, beta, jaz).ocena;
 			}
+			
 			if (igra.igralecNaPotezi() == jaz) { // Maksimiramo oceno
 				if (ocenap > ocena) { // mora biti > namesto >=
 					ocena = ocenap;
 					kandidat = p;
 					alpha = Math.max(alpha,ocena);
 				}
+				
 			} else { // igra.naPotezi() != jaz, torej minimiziramo oceno
 				if (ocenap < ocena) { // mora biti < namesto <=
 					ocena = ocenap;
@@ -62,6 +66,7 @@ public class Alphabeta extends Inteligenca {
 					beta = Math.min(beta, ocena);					
 				}	
 			}
+			
 			if (alpha >= beta) // Izstopimo iz "for loop", saj ostale poteze ne pomagajo
 				return new OcenjenaPozicija (kandidat, ocena);
 		}

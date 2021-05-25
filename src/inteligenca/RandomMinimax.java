@@ -3,6 +3,7 @@ package inteligenca;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import logika.Igra;
 
@@ -38,7 +39,7 @@ public class RandomMinimax extends Inteligenca {
 	 */
 	public static List<OcenjenaPozicija> najboljsePozicije(Igra igra, int globina) {
 		NajboljseOcenjenePozicije najboljsePozicije = new NajboljseOcenjenePozicije();
-		List<Koordinati> moznePoteze = igra.moznePoteze();
+		Set<Koordinati> moznePoteze = igra.moznePoteze();
 		for (Koordinati poteza: moznePoteze) {
 			Igra kopijaIgre = new Igra(igra); 
 			kopijaIgre.odigraj (poteza);	//poskusimo vsako potezo v novi kopiji igre

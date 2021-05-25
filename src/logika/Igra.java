@@ -1,7 +1,10 @@
 package logika;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
 import splosno.Koordinati;
 
 
@@ -12,6 +15,9 @@ public class Igra {
 
   //Koliko žetonov želimo imeti v vrsti, da zmagamo
   public static final int M = 5;
+  
+  //Nastavimo okolico, kjer iščemo možne poteze (2 - gleda okolico za 2 stran od zapolnjenih polj)
+  private static final int OKOLICA_MOZNE_POTEZE = 1;
 
   //Igralna plosca, ki sestoji iz polj(prazno, crno, belo)
   private Polje[][] plosca;
@@ -21,6 +27,9 @@ public class Igra {
 
   // Pomožen seznam vseh vrst na plošči.
   public static final List<Vrsta> VRSTE = new LinkedList<Vrsta>();
+
+
+
 
   static {
     // Ta koda se izvede na začetku, ko se prvič požene program.
@@ -97,17 +106,32 @@ public class Igra {
    *
    * @return moznePoteze
    */
-  public List<Koordinati> moznePoteze() {
-    LinkedList<Koordinati> moznePoteze = new LinkedList<Koordinati>();
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
-        if (plosca[i][j] == Polje.PRAZNO) {
-          moznePoteze.add(new Koordinati(i, j));
-        }
-      }
-    }
-    return moznePoteze;
-  }
+  public Set<Koordinati> moznePoteze() {
+	    Set<Koordinati> vseMoznePoteze = new HashSet<>();
+	    Set<Koordinati> mozneSosednePoteze = new HashSet<>();
+
+	    for (int i = 0; i < N; i++) {
+	      for (int j = 0; j < N; j++) {
+	        if (plosca[i][j] == Polje.PRAZNO) {
+	          vseMoznePoteze.add(new Koordinati(i, j));
+	        }
+
+	        if (plosca[i][j] != Polje.PRAZNO) {
+	          for (int dx = -OKOLICA_MOZNE_POTEZE; dx <= OKOLICA_MOZNE_POTEZE; dx++) {
+	            for (int dy = -OKOLICA_MOZNE_POTEZE; dy <= OKOLICA_MOZNE_POTEZE; dy++) {
+
+	              Koordinati kandidatniKoordinati = new Koordinati(i + dx, j + dy);
+
+	              if (jeVeljavnaPoteza(kandidatniKoordinati)) {
+	                mozneSosednePoteze.add(kandidatniKoordinati);
+	              }
+	            }
+	          }
+	        }
+	      }
+	    }
+	    return (mozneSosednePoteze.isEmpty()) ? vseMoznePoteze : mozneSosednePoteze;
+	  }
 
   /**
    * metoda cigavaVrsta(Vrsta vrsta) vrne igralca, ki ima zmagovalno vrsto (5vVrsto)
@@ -195,13 +219,13 @@ public class Igra {
    * @return true ce je veljavna, false, ce ni
    */
   public boolean jeVeljavnaPoteza(Koordinati poteza) {   //NVM ce se sploh rabi to metodo
+		if (poteza.getX() < 0 || poteza.getX() >= N) {
+			return false;
+		}
+		if (poteza.getY() < 0 || poteza.getY() >= N) {
+			return false;
+		}
 		if (plosca[poteza.getX()][poteza.getY()] != Polje.PRAZNO) {
-			return false;
-		}
-		if (poteza.getX() < 0 || poteza.getX() > N) {
-			return false;
-		}
-		if (poteza.getY() < 0 || poteza.getY() > N) {
 			return false;
 		}
     return true;
