@@ -188,7 +188,7 @@ public class Igra {
 
 
   /**
-   * metoda veljavnostPoteze(Koordinati poteza) preveri, ce je poteza veljavna preveri, ce je polje
+   * metoda veljavnostPoteze(Koordinati poteza) preveri, ce je poteza veljavna, preveri, ce je polje
    * prazno in ce sta koordinati X in Y med 0 in N
    *
    * @param poteza
@@ -213,7 +213,7 @@ public class Igra {
    * vrednost igralca na potezi ter ga nastavi na nasprotnika
    *
    * @param poteza
-   * @return true, ce je poteza veljavna, false - ce ni
+   * @return true, ce je bila poteza odigrana, false - ce ni
    */
   public boolean odigraj(Koordinati poteza) {
     if (jeVeljavnaPoteza(poteza)) {
