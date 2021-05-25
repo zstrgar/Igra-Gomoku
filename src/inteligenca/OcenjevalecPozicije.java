@@ -9,12 +9,12 @@ public class OcenjevalecPozicije {
 	
 	
 	// nastavimo vrednosti uteži, da igra ve, katere pozicije so več vredne
-  private static final int UTEZ_FIVE_IN_ROW = 100;
-  private static final int UTEZ_STRAIGHT_FOUR = 100;
-  private static final int UTEZ_FOUR_IN_ROW = 75;
-  private static final int UTEZ_THREE_IN_ROW = 10;
-  private static final int UTEZ_BROKEN_THREE = 5;
-  private static final int UTEZ_TWO_IN_ROW = 2;
+  private static final int UTEZ_FIVE_IN_ROW = 500;
+  private static final int UTEZ_STRAIGHT_FOUR = 500;
+  private static final int UTEZ_FOUR_IN_ROW = 100;
+  private static final int UTEZ_THREE_IN_ROW = 80;
+  private static final int UTEZ_BROKEN_THREE = 50;
+  private static final int UTEZ_TWO_IN_ROW = 5;
   private static final int UTEZ_SINGLE = 1;
 
   private final StatistikaPozicije statistikaBeli = new StatistikaPozicije();

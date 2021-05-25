@@ -11,10 +11,10 @@ public class Inteligenca extends KdoIgra{  //podrazred razreda splosno.KdoIgra
 		super("Algebros");  // ime skupine
 	}
 
-	// TODO !! ***********************************************************************
+	// TODO !! *********************************************************************** 
 	
 	public Koordinati izberiPotezo(Igra igra) {
-		return null;
+		return new Alphabeta(2).izberiPotezo(igra);
 	}
 
 }

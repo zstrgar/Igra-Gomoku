@@ -9,7 +9,7 @@ import splosno.Koordinati;
 
 public class Alphabeta extends Inteligenca {
 	
-	private static final int ZMAGA = 100; // vrednost zmage
+	private static final int ZMAGA = 1000; // vrednost zmage
 	private static final int ZGUBA = -ZMAGA;  // vrednost poraza
 	private static final int NEODLOC = 0;  // vrednost neodločene igre	
 	
