@@ -6,7 +6,9 @@ import logika.Polje;
 import logika.Vrsta;
 
 public class OcenjevalecPozicije {
-
+	
+	
+	// nastavimo vrednosti uteži, da igra ve, katere pozicije so več vredne
   private static final int UTEZ_FIVE_IN_ROW = 100;
   private static final int UTEZ_STRAIGHT_FOUR = 100;
   private static final int UTEZ_FOUR_IN_ROW = 75;
@@ -24,10 +26,8 @@ public class OcenjevalecPozicije {
 
   /**
    * Metoda oceniPozicijo oceni pozicijo igre igra za igralca jaz (po navadi je to igralec na
-   * potezi), ocena dobimo tako, da seštejemo vse delne vrste za igralca jaz in odštejemo vse delne
-   * vrste za igralca nasprotnika. Odštevanje v resnici pomeni prištevanje nasprotne vrednosti, ki
-   * jo nastavimo že v metodi oceniVrsto.
-   *
+   * potezi), oceno dobimo tako, da seštejemo vse delne vrste za igralca jaz in odštejemo vse delne
+   * vrste za igralca nasprotnika. 
    * @param igra
    * @param jaz  - igralec, ki želi oceno
    * @return ocena
@@ -36,7 +36,7 @@ public class OcenjevalecPozicije {
     for (Vrsta vrsta : Igra.VRSTE) {
       oceniVrsto(vrsta, igra, jaz);
     }
-
+    //preverimo, kateri igralec je jaz in ustrezno odštejemo statistike
     if (jaz == Igralec.BEL) {
       return sestejOcene(statistikaBeli) - sestejOcene(statistikaCrni);
     } else {
@@ -46,36 +46,28 @@ public class OcenjevalecPozicije {
 
   /**
    * Metoda oceniVrsto oceni določeno vrsto v igri igra z vidika igralca jaz.
-   *
    * @param vrsta - vrsta, ki jo ocenjujemo
    * @param igra
    * @param jaz   - igralec, ki želi oceno
-   * @return Število (preštetih žetonov v vrsti (negativna za št. črnih, pozitivno št. za število
-   * belih)
+   * @return 
    */
   private void oceniVrsto(Vrsta vrsta, Igra igra, Igralec jaz) {
     String nizVrsta = vrstaToString(vrsta, igra);
 
     //oceni igralec beli
     // preštej five in row
-    if (nizVrsta.contains("BBBBB")) {
-      statistikaBeli.fiveInRow++;
-    }
+    if (nizVrsta.contains("BBBBB")) statistikaBeli.fiveInRow++;
 
     //preštej three-in-row
-    if (nizVrsta.contains("PBBBP")) {
-      statistikaBeli.threeInRow++;
-    }
+    if (nizVrsta.contains("PBBBP")) statistikaBeli.threeInRow++;
+    
 
     // preštej črni five-in-row
-    if (nizVrsta.contains("CCCCC")) {
-      statistikaCrni.fiveInRow++;
-    }
+    if (nizVrsta.contains("CCCCC")) statistikaCrni.fiveInRow++;
 
     //preštej črni three-in-row
-    if (nizVrsta.contains("PCCCP")) {
-      statistikaCrni.threeInRow++;
-    }
+    if (nizVrsta.contains("PCCCP")) statistikaCrni.threeInRow++;
+    
 
     Vrsta razsirjenaVrsta = razsiriVrsto(vrsta);
 
@@ -83,10 +75,9 @@ public class OcenjevalecPozicije {
       String nizRazsirjenaVrsta = vrstaToString(razsirjenaVrsta, igra);
 
       //beli
-      // preštej, če beli straight four
-      if (nizRazsirjenaVrsta.contains("PBBBBP")) {
-        statistikaBeli.straightFour++;
-      }
+      // preštej, če ima beli straight four
+      if (nizRazsirjenaVrsta.contains("PBBBBP")) statistikaBeli.straightFour++;
+      
 
       //preštej, če ima beli four in row
       if (nizRazsirjenaVrsta.contains("PBBBBC") || nizRazsirjenaVrsta.contains("CBBBBP")) {
@@ -107,9 +98,7 @@ public class OcenjevalecPozicije {
 
       //ČRNI
       // preštej, če ima črni straight four
-      if (nizRazsirjenaVrsta.contains("PCCCCP")) {
-        statistikaCrni.straightFour++;
-      }
+      if (nizRazsirjenaVrsta.contains("PCCCCP")) statistikaCrni.straightFour++;
 
       //preštej, če ima črni four in row
       if (nizRazsirjenaVrsta.contains("PCCCCB") || nizRazsirjenaVrsta.contains("BCCCCP")) {
@@ -130,32 +119,44 @@ public class OcenjevalecPozicije {
           statistikaCrni.single + countSubstring("CP", nizRazsirjenaVrsta);
     }
   }
-
+  
+  
+  /**
+   * Metoda razsiriVrsto dano vrsto razširi v njeni smeri (razsiri jo za eno polje)
+   * @param vrsta
+   * @return razsirjena vrsta, če jo lahko razširi, sicer vrne null
+   */
   private Vrsta razsiriVrsto(Vrsta vrsta) {
-    int[] smerVrste = vrsta.smerVrste();
-    int dx = smerVrste[0];
-    int dy = smerVrste[1];
+	  // preberemo smer dane vrste
+	  int[] smerVrste = vrsta.smerVrste();
+	  int dx = smerVrste[0];
+	  int dy = smerVrste[1];
 
-    int povecanX = vrsta.x[vrsta.x.length - 1] + dx;
-    int povecanY = vrsta.y[vrsta.y.length - 1] + dy;
+	  int povecanX = vrsta.x[vrsta.x.length - 1] + dx;
+	  int povecanY = vrsta.y[vrsta.y.length - 1] + dy;
 
-    if ((0 <= povecanX && povecanX < Igra.N) &&
-        (0 <= povecanY && povecanY < Igra.N)) {
+	  if ((0 <= povecanX && povecanX < Igra.N) && (0 <= povecanY && povecanY < Igra.N)) {
 
-      int[] razsirjeniX = new int[vrsta.x.length + 1];
-      int[] razsirjeniY = new int[vrsta.y.length + 1];
+		  int[] razsirjeniX = new int[vrsta.x.length + 1];
+		  int[] razsirjeniY = new int[vrsta.y.length + 1];
 
-      System.arraycopy(vrsta.x, 0, razsirjeniX, 0, vrsta.x.length);
-      razsirjeniX[razsirjeniX.length - 1] = povecanX;
+		  System.arraycopy(vrsta.x, 0, razsirjeniX, 0, vrsta.x.length);
+		  razsirjeniX[razsirjeniX.length - 1] = povecanX;
 
-      System.arraycopy(vrsta.y, 0, razsirjeniY, 0, vrsta.y.length);
-      razsirjeniY[razsirjeniY.length - 1] = povecanY;
+		  System.arraycopy(vrsta.y, 0, razsirjeniY, 0, vrsta.y.length);
+		  razsirjeniY[razsirjeniY.length - 1] = povecanY;
 
-      return new Vrsta(razsirjeniX, razsirjeniY);
-    }
-    return null;
-  }
+		  return new Vrsta(razsirjeniX, razsirjeniY);
+	  }
+	  return null;
+  	}
 
+  /**
+   * Metoda countSubstring prejme podniz substring, niza string in vrne število podnizov v nizu.
+   * @param substring
+   * @param string
+   * @return število podnizov v nizu
+   */
   private int countSubstring(String substring, String string) {
 
     int count = 0;
@@ -167,6 +168,13 @@ public class OcenjevalecPozicije {
     return count;
   }
 
+  /**
+   * Metoda vrstaToString vrsto v igri pretvori v niz, ki je sestavljen iz znakov P, B in C.
+   * Znak P označuje prazno polje, C - crno polje, B-belo polje
+   * @param vrsta
+   * @param igra
+   * @return niz z znaki P, B, C
+   */
   private String vrstaToString(Vrsta vrsta, Igra igra) {
     String niz = "";
 
@@ -188,6 +196,12 @@ public class OcenjevalecPozicije {
     return niz;
   }
 
+  /**
+   * Metoda sestejOcene sesteje število različnih pozicij in jih primerno uteži, 
+   * vrne oceno s strani igralca, ki želi pogledati svojo statistiko
+   * @param statistikaPozicije
+   * @return skupna ocena
+   */
   private int sestejOcene(StatistikaPozicije statistikaPozicije) {
     return UTEZ_FIVE_IN_ROW * statistikaPozicije.fiveInRow
         + UTEZ_STRAIGHT_FOUR * statistikaPozicije.straightFour
@@ -199,5 +213,3 @@ public class OcenjevalecPozicije {
   }
 
 }
-
-

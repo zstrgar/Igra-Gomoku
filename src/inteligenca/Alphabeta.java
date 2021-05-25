@@ -7,8 +7,6 @@ import logika.Igralec;
 
 import splosno.Koordinati;
 
-import inteligenca.OcenjevalecPozicije;
-
 public class Alphabeta extends Inteligenca {
 	
 	private static final int ZMAGA = 100; // vrednost zmage

@@ -65,16 +65,6 @@ public class Igra {
     igralecNaPotezi = Igralec.BEL;
   }
 
-  public Igra(int N) {    // konstruktor, ki dobi velikost igre za parameter
-    plosca = new Polje[N][N];
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
-        plosca[i][j] = Polje.PRAZNO;
-      }
-    }
-    igralecNaPotezi = Igralec.BEL;
-  }
-
   public Igra(Igra igra) {    // ustvarimo kopijo igre!
     this.plosca = new Polje[N][N];
     for (int i = 0; i < N; i++) {
@@ -85,6 +75,7 @@ public class Igra {
     this.igralecNaPotezi = igra.igralecNaPotezi;
   }
 
+  
   /**
    * @return igralna plosca
    */

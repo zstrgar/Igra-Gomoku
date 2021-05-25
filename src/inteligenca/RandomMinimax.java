@@ -8,9 +8,6 @@ import logika.Igra;
 
 import splosno.Koordinati;
 
-
-import inteligenca.NajboljseOcenjenePozicije;
-
 public class RandomMinimax extends Inteligenca {
 	
 	private static final Random RANDOM = new Random();
