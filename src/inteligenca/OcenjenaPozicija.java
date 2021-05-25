@@ -2,7 +2,7 @@ package inteligenca;
 
 import splosno.Koordinati;
 
-public class OcenjenaPozicija {
+public class OcenjenaPozicija implements Comparable<OcenjenaPozicija> {
 	
 	Koordinati poteza;
 	int ocena;
@@ -23,6 +23,7 @@ public class OcenjenaPozicija {
 	 * @param ocenjenaPozicija
 	 * @return -1, 1 ali 0
 	 */
+	@Override
 	public int compareTo (OcenjenaPozicija ocenjenaPozicija) {
 		if (this.ocena < ocenjenaPozicija.ocena) return -1;
 		else if (this.ocena > ocenjenaPozicija.ocena) return 1;
