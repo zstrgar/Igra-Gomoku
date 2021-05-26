@@ -13,6 +13,11 @@ public class Inteligenca extends KdoIgra{  //podrazred razreda splosno.KdoIgra
 
 	// TODO !! *********************************************************************** 
 	
+	/**
+	 * Metoda izberiPotezo, v Igri igra izbere potezo v skladu z algoritmom, ki smo ga znotraj metode navedli (in jo odigra)
+	 * @param igra
+	 * @return
+	 */
 	public Koordinati izberiPotezo(Igra igra) {
 		return new Alphabeta(3).izberiPotezo(igra);
 	}

@@ -17,7 +17,7 @@ public class Alphabeta extends Inteligenca {
 	private static final int ZGUBA = -ZMAGA;  // vrednost poraza
 	private static final int NEODLOC = 0;  // vrednost neodločene igre
 	
-	private static final int STEVILO_GLEDANIH = 10; //stevilo moznih potez, na katerih bomo delali a-b pruning
+	private static final int K_NAJBOLJSIH = 15; //stevilo najboljsih potez, na katerih bomo delali a-b pruning
 	
 	private int globina;
 	
@@ -38,11 +38,14 @@ public class Alphabeta extends Inteligenca {
 		// Če sem pa človek, minimiziramo oceno z začetno oceno ZMAGA
 		if (igra.igralecNaPotezi() == jaz) {ocena = ZGUBA;} else {ocena = ZMAGA;}
 		
+		
 		Set<Koordinati> moznePoteze = igra.moznePoteze();
 		Koordinati kandidat = moznePoteze.iterator().next(); // Možno je, da se ne spremini vrednost kanditata. Zato ne more biti null.
 		
-		List<Koordinati> topPoteze = vrniTopOcenjenePoteze(15, moznePoteze, igra, jaz);
+		//Skrajšamo seznam moznih potez, tako da ocenimo vse mozne poteze in samo najboljših k damo v nov seznam topPotez
+		List<Koordinati> topPoteze = vrniTopOcenjenePoteze(K_NAJBOLJSIH, moznePoteze, igra, jaz);
 		
+		//algoritem izvedemo samo na topPotezah
 		for (Koordinati p: topPoteze) {
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.odigraj(p);
@@ -80,10 +83,19 @@ public class Alphabeta extends Inteligenca {
 		return new OcenjenaPozicija (kandidat, ocena);
 	}
 	
-	
+	/**
+	 * Metoda vrniTopOcenjenePoteze vrne seznam najboljših k potez iz množice moznePoteze v igri.
+	 * @param k - koliko najboljših želimo
+	 * @param moznePoteze
+	 * @param igra
+	 * @param jaz - z vidika katerega igralca gledamo
+	 * @return seznam najboljših k potez (topPoteze)
+	 */
 	private static List<Koordinati> vrniTopOcenjenePoteze(int k, Set<Koordinati> moznePoteze, Igra igra, Igralec jaz) {
-		PriorityQueue<OcenjenaPozicija> rangiranePozicije = new PriorityQueue(Collections.reverseOrder());
+		//Razvrsti elemente od največjega do najmanjšega 
+		PriorityQueue<OcenjenaPozicija> rangiranePozicije = new PriorityQueue(Collections.reverseOrder()); //po defaultu pa jih razvršča od najmanjšega do največjega, zato reverse!
 		
+		//Vsako potezo odigra in jo oceni ter shrani v rangiranePozicije
 		for (Koordinati poteza: moznePoteze) {
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.odigraj(poteza);
@@ -93,8 +105,10 @@ public class Alphabeta extends Inteligenca {
 			rangiranePozicije.add(new OcenjenaPozicija(poteza, ocena));
 		}
 		
+		
 		List<Koordinati> topPoteze = new ArrayList<>();
 		
+		//iz rangiranihPozicij jih najboljših k odvzamemo
 		for (int i=0; i<k;i++) {
 			OcenjenaPozicija ocenjenaPozicija = rangiranePozicije.poll();
 			

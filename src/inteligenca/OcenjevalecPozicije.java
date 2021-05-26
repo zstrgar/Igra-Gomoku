@@ -8,7 +8,7 @@ import logika.Vrsta;
 public class OcenjevalecPozicije {
 	
 	
-	// nastavimo vrednosti uteži, da igra ve, katere pozicije so več vredne
+	// nastavimo vrednosti uteži, da igra ve, katere pozicije so več vredne (boljše)
   private static final int UTEZ_FIVE_IN_ROW = 500;
   private static final int UTEZ_STRAIGHT_FOUR = 500;
   private static final int UTEZ_FOUR_IN_ROW = 100;
@@ -136,10 +136,11 @@ public class OcenjevalecPozicije {
 	  int povecanY = vrsta.y[vrsta.y.length - 1] + dy;
 
 	  if ((0 <= povecanX && povecanX < Igra.N) && (0 <= povecanY && povecanY < Igra.N)) {
-
+		  //povečamo vrsto za 1
 		  int[] razsirjeniX = new int[vrsta.x.length + 1];
 		  int[] razsirjeniY = new int[vrsta.y.length + 1];
-
+		  
+		  //v razširjene vrste dodamo ustrezen element (naslednje polje v smeri dane vrste)
 		  System.arraycopy(vrsta.x, 0, razsirjeniX, 0, vrsta.x.length);
 		  razsirjeniX[razsirjeniX.length - 1] = povecanX;
 
