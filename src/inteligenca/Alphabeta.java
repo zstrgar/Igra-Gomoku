@@ -42,37 +42,38 @@ public class Alphabeta extends Inteligenca {
 		Set<Koordinati> moznePoteze = igra.moznePoteze();
 		Koordinati kandidat = moznePoteze.iterator().next(); // Možno je, da se ne spremini vrednost kanditata. Zato ne more biti null.
 		
-		//Skrajšamo seznam moznih potez, tako da ocenimo vse mozne poteze in samo najboljših k damo v nov seznam topPotez
-		List<Koordinati> topPoteze = vrniTopOcenjenePoteze(K_NAJBOLJSIH, moznePoteze, igra, jaz);
+		//Odkomentiraj ti dve vrstici, če želiš algoritem samo na topPotezah (ki ne deluje dovolj dobro)
+		//List<Koordinati> topPoteze = vrniTopOcenjenePoteze(K_NAJBOLJSIH, moznePoteze, igra); //Skrajšamo seznam moznih potez, tako da ocenimo vse mozne poteze in samo najboljših k damo v nov seznam topPotez
+		//for (Koordinati poteza: topPoteze) {	//algoritem izvedemo na topPotezah
 		
-		//algoritem izvedemo samo na topPotezah
-		for (Koordinati p: topPoteze) {
+		//Zakomentiraj, če želiš algoritem na topPotezah in ne na moznihPotezah
+		for (Koordinati poteza: moznePoteze) {	//algoritem izvedemo samo na moznihPotezah
 			Igra kopijaIgre = new Igra(igra);
-			kopijaIgre.odigraj(p);
-			int ocenap;
+			kopijaIgre.odigraj(poteza);
+			int ocenaPozicije;
 			switch (kopijaIgre.stanje()) {
-			case ZMAGA_BEL: ocenap = (jaz == Igralec.BEL ? ZMAGA : ZGUBA); break;
-			case ZMAGA_CRN: ocenap = (jaz == Igralec.CRN ? ZMAGA : ZGUBA); break;
-			case NEODLOCENO: ocenap = NEODLOC; break;
+			case ZMAGA_BEL: ocenaPozicije = (jaz == Igralec.BEL ? ZMAGA : ZGUBA); break;
+			case ZMAGA_CRN: ocenaPozicije = (jaz == Igralec.CRN ? ZMAGA : ZGUBA); break;
+			case NEODLOCENO: ocenaPozicije = NEODLOC; break;
 			default:
 				// Nekdo je na potezi
 				
 				OcenjevalecPozicije ocenjevalecPozicije = new OcenjevalecPozicije();
-				if (globina == 1) ocenap = ocenjevalecPozicije.oceniPozicijo(kopijaIgre, jaz);
-				else ocenap = alphabetaPoteze (kopijaIgre, globina-1, alpha, beta, jaz).ocena;
+				if (globina == 1) ocenaPozicije = ocenjevalecPozicije.oceniPozicijo(kopijaIgre, jaz);
+				else ocenaPozicije = alphabetaPoteze (kopijaIgre, globina-1, alpha, beta, jaz).ocena;
 			}
 			
 			if (igra.igralecNaPotezi() == jaz) { // Maksimiramo oceno
-				if (ocenap > ocena) { // mora biti > namesto >=
-					ocena = ocenap;
-					kandidat = p;
+				if (ocenaPozicije > ocena) { // mora biti > namesto >=
+					ocena = ocenaPozicije;
+					kandidat = poteza;
 					alpha = Math.max(alpha,ocena);
 				}
 				
 			} else { // igra.naPotezi() != jaz, torej minimiziramo oceno
-				if (ocenap < ocena) { // mora biti < namesto <=
-					ocena = ocenap;
-					kandidat = p;
+				if (ocenaPozicije < ocena) { // mora biti < namesto <=
+					ocena = ocenaPozicije;
+					kandidat = poteza;
 					beta = Math.min(beta, ocena);					
 				}	
 			}
@@ -93,7 +94,7 @@ public class Alphabeta extends Inteligenca {
 	 */
 	private static List<Koordinati> vrniTopOcenjenePoteze(int k, Set<Koordinati> moznePoteze, Igra igra, Igralec jaz) {
 		//Razvrsti elemente od največjega do najmanjšega 
-		PriorityQueue<OcenjenaPozicija> rangiranePozicije = new PriorityQueue(Collections.reverseOrder()); //po defaultu pa jih razvršča od najmanjšega do največjega, zato reverse!
+		PriorityQueue<OcenjenaPozicija> rangiranePozicije = new PriorityQueue(Collections.reverseOrder()); //po defaultu jih razvršča od najmanjšega do največjega, zato reverse!
 		
 		//Vsako potezo odigra in jo oceni ter shrani v rangiranePozicije
 		for (Koordinati poteza: moznePoteze) {
