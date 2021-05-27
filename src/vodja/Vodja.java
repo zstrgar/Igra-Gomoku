@@ -32,6 +32,10 @@ public class Vodja {
 	
 	public static boolean clovekNaVrsti = false;
 		
+	public static void igramoNovoIgro(Igra game){
+		igra=game;
+		igramo();
+	}
 	public static void igramoNovoIgro () {
 		igra = new Igra ();
 		igramo ();

@@ -11,13 +11,14 @@ import splosno.Koordinati;
 public class Igra {
 
   //Velikost igralne plošče
-  public static final int N = 15;
+  public int N = 15;
 
   //Koliko žetonov želimo imeti v vrsti, da zmagamo
-  public static final int M = 5;
+  public int M = 5;
   
   //Nastavimo okolico, kjer iščemo možne poteze (2 - gleda okolico za 2 stran od zapolnjenih polj)
-  private static final int OKOLICA_MOZNE_POTEZE = 2;
+  // TODO: ce das kot argument lahko isces enkrat vec enkrat manj 
+  private final int OKOLICA_MOZNE_POTEZE = 2;
 
   //Igralna plosca, ki sestoji iz polj(prazno, crno, belo)
   private Polje[][] plosca;
@@ -29,9 +30,46 @@ public class Igra {
   public static final List<Vrsta> VRSTE = new LinkedList<Vrsta>();
 
 
+  /**
+   * Nova igra, na začetku je prazna in na potezi je BEL.
+   */
+  public Igra() {          //konstruktor
+    zazeniPlosco();
+    plosca = new Polje[N][N];
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        plosca[i][j] = Polje.PRAZNO;
+      }
+    }
+    igralecNaPotezi = Igralec.BEL;
+  }
+
+  public Igra(int velikost, int kokVVrsto) {          //konstruktor
+    N=velikost;
+    M=kokVVrsto;
+    zazeniPlosco();
+    plosca = new Polje[N][N];
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        plosca[i][j] = Polje.PRAZNO;
+      }
+    }
+    igralecNaPotezi = Igralec.BEL;
+  }
 
 
-  static {
+  public Igra(Igra igra) {    // ustvarimo kopijo igre!
+    this.plosca = new Polje[N][N];
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        this.plosca[i][j] = igra.plosca[i][j];
+      }
+    }
+    this.igralecNaPotezi = igra.igralecNaPotezi;
+  }
+
+
+  private void zazeniPlosco(){
     // Ta koda se izvede na začetku, ko se prvič požene program.
     // Njena naloga je, da prepozna vrednosti statičnih
     // spremenljivk.
@@ -58,30 +96,6 @@ public class Igra {
         }
       }
     }
-  }
-
-
-  /**
-   * Nova igra, na začetku je prazna in na potezi je BEL.
-   */
-  public Igra() {          //konstruktor
-    plosca = new Polje[N][N];
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
-        plosca[i][j] = Polje.PRAZNO;
-      }
-    }
-    igralecNaPotezi = Igralec.BEL;
-  }
-
-  public Igra(Igra igra) {    // ustvarimo kopijo igre!
-    this.plosca = new Polje[N][N];
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
-        this.plosca[i][j] = igra.plosca[i][j];
-      }
-    }
-    this.igralecNaPotezi = igra.igralecNaPotezi;
   }
 
   

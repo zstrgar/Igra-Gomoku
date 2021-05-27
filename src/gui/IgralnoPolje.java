@@ -39,11 +39,29 @@ import vodja.Vodja;;
  */
 //@SuppressWarnings("serial")
 public class IgralnoPolje extends JPanel implements MouseListener {
+
+	protected Color barvaIgralca1;
+	protected Color barvaIgralca2;
+	protected Color barvaOzadja;
+	protected int velikostIgre;
+	protected Igra igra;
+
 	
-	public IgralnoPolje() {
-		setBackground(Color.gray);
+	public IgralnoPolje(int velikostIgre) {
+		this.velikostIgre = velikostIgre;
+		this.igra = null;
+		this.barvaIgralca1=Color.WHITE;
+		this.barvaIgralca2=Color.BLACK;
+		this.barvaOzadja=Color.LIGHT_GRAY;
+		// this.setBackground(barvaOzadja); // nastavimo nizje (glej dol)
 		this.addMouseListener(this);
 		
+	}
+	
+
+	public void nastaviIgro(Igra igra){
+		this.igra=igra;
+		repaint();
 	}
 
 	@Override
@@ -57,26 +75,11 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	
 	// Širina enega kvadratka
 	private double squareWidth() {
-		return Math.min(getWidth(), getHeight()) / Igra.N;
+		return Math.min(getWidth(), getHeight()) / velikostIgre;
 	}
 	
 	private final static double PADDING = 0.05;
 	
-	/**
-	 * V grafični kontekst g2 nariši križec v polje (i,j)
-	 * 
-	 * @param g2
-	 * @param i
-	 * @param j
-	 */
-	private void narisiCrnKrog(Graphics2D g2, int i, int j) {
-		double w = squareWidth();
-		double d = w * (1.0 - 2.0 * PADDING); // premer 
-		double x = w * (i + PADDING);
-		double y = w * (j + PADDING);
-		g2.setColor(Color.BLACK);
-		g2.fillOval((int)x, (int)y, (int)d , (int)d);
-	}
 	
 	/**
 	 * V grafični kontekst {@g2} nariši križec v polje {@(i,j)}
@@ -84,67 +87,75 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	 * @param i
 	 * @param j
 	 */
-	private void narisiBelKrog(Graphics2D g2, int i, int j) {
+	private void narisiKrog(Graphics2D g2, int i, int j, Color barva) {
 		double w = squareWidth();
 		double d = w * (1.0 - 2.0 * PADDING); // premer 
 		double x = w * (i + PADDING);
 		double y = w * (j + PADDING);
-		g2.setColor(Color.WHITE);
+		g2.setColor(barva);
 		g2.fillOval((int)x, (int)y, (int)d , (int)d);
+		g2.setColor(Color.black);
+		g2.setStroke(new BasicStroke(2));
+		g2.drawOval((int)x, (int)y, (int)d, (int)d);
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
+		
 
-		double w = squareWidth();
+		double w = squareWidth();	
 
-		// če imamo zmagovalno vrsto, njeno ozadje pobarvamo
+		this.setBackground(barvaOzadja);
+
+		// narisemo črte
+		g2.setColor(Color.BLACK);
+		g2.setStroke(new BasicStroke((float) (w * LINE_WIDTH)));
+		for (int i = 0; i < velikostIgre; i++) {
+			g2.drawLine((int)(i * w + w/2),
+					    (int)(0),
+					    (int)(i * w + w/2),
+					    (int)(velikostIgre * w));
+			g2.drawLine((int)(0),
+					    (int)(i * w + w/2),
+					    (int)(velikostIgre * w),
+					    (int)(i * w + w/2));
+		}
+		// narisemo odigrane poteze (krogce)
+		Polje[][] plosca;;
+		if (Vodja.igra != null) {
+			plosca = Vodja.igra.getPlosca();
+			for (int i = 0; i < velikostIgre; i++) {
+				for (int j = 0; j < velikostIgre; j++) {
+					switch(plosca[i][j]) {
+					case CRNO: narisiKrog(g2, i, j, barvaIgralca2); break;
+					case BELO: narisiKrog(g2, i, j, barvaIgralca1); break;
+					default: break;
+					}
+				}
+			}
+		}
+		// če imamo zmagovalno vrsto, potegnemo crto (njeno ozadje pobarvamo)
 		Vrsta vrsta = null;
 		if (Vodja.igra != null) {
 			vrsta = Vodja.igra.zmagovalnaVrsta();
 		}
 		if (vrsta != null) {
-			g2.setColor(new Color(255, 255, 196));
-			for (int k = 0; k < Igra.M; k++) {
-				int i = vrsta.x[k];
-				int j = vrsta.y[k];
-				g2.fillRect((int)(w * i), (int)(w * j), (int)w, (int)w);
-			}
-		}
-		
-		// narisemo črte
-		g2.setColor(Color.BLACK);
-		g2.setStroke(new BasicStroke((float) (w * LINE_WIDTH)));
-		for (int i = 0; i < Igra.N; i++) {
-			g2.drawLine((int)(i * w + w/2),
-					    (int)(0),
-					    (int)(i * w + w/2),
-					    (int)(Igra.N * w));
-			g2.drawLine((int)(0),
-					    (int)(i * w + w/2),
-					    (int)(Igra.N * w),
-					    (int)(i * w + w/2));
-		}
-		
-		Polje[][] plosca;;
-		if (Vodja.igra != null) {
-			plosca = Vodja.igra.getPlosca();
-			for (int i = 0; i < Igra.N; i++) {
-				for (int j = 0; j < Igra.N; j++) {
-					switch(plosca[i][j]) {
-					case CRNO: narisiCrnKrog(g2, i, j); break;
-					case BELO: narisiBelKrog(g2, i, j); break;
-					default: break;
-					}
-				}
-			}
-		}	
-		
+			int x1 = vrsta.x[0];
+			int y1 = vrsta.y[0];
+			// int x2 = vrsta.x[igra.M-1];
+			// int y2 = vrsta.y[igra.M-1];
+			// TODO: zacasno
+			int x2 = vrsta.x[4];
+			int y2 = vrsta.y[4];
+			g2.setColor(new Color(255, 51, 51));
+			g2.setStroke(new BasicStroke((float) (w/8 )));
+			g2.drawLine((int)(w * x1+ w/2), (int)(w * y1+ w/2), (int)(w * x2+ w/2), (int)(w * y2+ w/2));
+		}		
+	
 	}
 	
-	// TODO mogoče bolje če se preveri v radiju kroga
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (Vodja.clovekNaVrsti) {
@@ -156,13 +167,29 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			double di = (x % w) / squareWidth() ;
 			int j = y / w ;
 			double dj = (y % w) / squareWidth() ;
-			if (0 <= i && i < Igra.N &&
+			if (0 <= i && i < velikostIgre &&
 					0.5 * LINE_WIDTH < di && di < 1.0 - 0.5 * LINE_WIDTH &&
-					0 <= j && j < Igra.N && 
+					0 <= j && j < velikostIgre && 
 					0.5 * LINE_WIDTH < dj && dj < 1.0 - 0.5 * LINE_WIDTH) {
 				Vodja.clovekovaPoteza (new Koordinati(i, j));
 			}
 		}
+	}
+
+	public void barva1(Color b) {
+		if (b != null) {
+			this.barvaIgralca1 = b;
+			repaint();		}
+	}
+	public void barva2(Color b) {
+		if (b != null) {
+			this.barvaIgralca2 = b;
+			repaint();		}
+	}
+	public void pobarvajOzadje(Color b) {
+		if (b != null) {
+			this.barvaOzadja = b;
+			repaint();		}
 	}
 
 	@Override
