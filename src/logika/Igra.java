@@ -17,7 +17,7 @@ public class Igra {
   public static final int M = 5;
   
   //Nastavimo okolico, kjer iščemo možne poteze (2 - gleda okolico za 2 stran od zapolnjenih polj)
-  private static final int OKOLICA_MOZNE_POTEZE = 3;
+  private static final int OKOLICA_MOZNE_POTEZE = 2;
 
   //Igralna plosca, ki sestoji iz polj(prazno, crno, belo)
   private Polje[][] plosca;
