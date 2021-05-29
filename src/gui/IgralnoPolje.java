@@ -10,29 +10,10 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-
-import logika.Igra;
 import logika.Polje;
 import logika.Vrsta;
 import splosno.Koordinati;
 import vodja.Vodja;;
-
-/**
- *  TODO
- *  1. plosca na sredino
- *  2. menu
- *  	1. nastavljiva velikost igralne plošče
- *  	2. lastnosti igralcev (ime, človek ali računalnik, kateri algoritem uporablja računalnik, ...), 
- *   	3. lastnosti grafičnega vmesnika (barve žetonov, ...), 
- *  	4. koliko časa naj preteče, preden računalnik odigra potezo ....
- *  3. lepša plošča
- *  4. (polepšaj kodo, komentarji)
- */
-
-//TODO: ustrezna prilagoditev žetonov in plošče ob povečanje/pomanjšanju okna
-
-
-
 
 /**
  *  Risanje plošče
@@ -43,39 +24,30 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	protected Color barvaIgralca1;
 	protected Color barvaIgralca2;
 	protected Color barvaOzadja;
-	protected int velikostIgre;
-	protected Igra igra;
+
 
 	
-	public IgralnoPolje(int velikostIgre) {
-		this.velikostIgre = velikostIgre;
-		this.igra = null;
+	public IgralnoPolje() {
 		this.barvaIgralca1=Color.WHITE;
 		this.barvaIgralca2=Color.BLACK;
 		this.barvaOzadja=Color.LIGHT_GRAY;
-		// this.setBackground(barvaOzadja); // nastavimo nizje (glej dol)
 		this.addMouseListener(this);
-		
 	}
-	
 
-	public void nastaviIgro(Igra igra){
-		this.igra=igra;
-		repaint();
-	}
 
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(600, 600);
 	}
 
-	
 	// Relativna širina črte
 	private final static double LINE_WIDTH = 0.02;
+
+
 	
 	// Širina enega kvadratka
 	private double squareWidth() {
-		return Math.min(getWidth(), getHeight()) / velikostIgre;
+		return Math.min(getWidth(), getHeight()) / Vodja.igra.velikostPolja();
 	}
 	
 	private final static double PADDING = 0.05;
@@ -112,22 +84,22 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		// narisemo črte
 		g2.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke((float) (w * LINE_WIDTH)));
-		for (int i = 0; i < velikostIgre; i++) {
-			g2.drawLine((int)(i * w + w/2),
+		for (int i = 0; i < Vodja.igra.velikostPolja()+1; i++) {
+			g2.drawLine((int)(i * w),
 					    (int)(0),
-					    (int)(i * w + w/2),
-					    (int)(velikostIgre * w));
+					    (int)(i * w),
+					    (int)(Vodja.igra.velikostPolja() * w));
 			g2.drawLine((int)(0),
-					    (int)(i * w + w/2),
-					    (int)(velikostIgre * w),
-					    (int)(i * w + w/2));
+					    (int)(i * w),
+					    (int)(Vodja.igra.velikostPolja() * w),
+					    (int)(i * w));
 		}
 		// narisemo odigrane poteze (krogce)
 		Polje[][] plosca;;
 		if (Vodja.igra != null) {
 			plosca = Vodja.igra.getPlosca();
-			for (int i = 0; i < velikostIgre; i++) {
-				for (int j = 0; j < velikostIgre; j++) {
+			for (int i = 0; i < Vodja.igra.velikostPolja(); i++) {
+				for (int j = 0; j < Vodja.igra.velikostPolja(); j++) {
 					switch(plosca[i][j]) {
 					case CRNO: narisiKrog(g2, i, j, barvaIgralca2); break;
 					case BELO: narisiKrog(g2, i, j, barvaIgralca1); break;
@@ -144,11 +116,8 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		if (vrsta != null) {
 			int x1 = vrsta.x[0];
 			int y1 = vrsta.y[0];
-			// int x2 = vrsta.x[igra.M-1];
-			// int y2 = vrsta.y[igra.M-1];
-			// TODO: zacasno
-			int x2 = vrsta.x[4];
-			int y2 = vrsta.y[4];
+			int x2 = vrsta.x[Vodja.igra.kokVVrsto()-1];
+			int y2 = vrsta.y[Vodja.igra.kokVVrsto()-1];
 			g2.setColor(new Color(255, 51, 51));
 			g2.setStroke(new BasicStroke((float) (w/8 )));
 			g2.drawLine((int)(w * x1+ w/2), (int)(w * y1+ w/2), (int)(w * x2+ w/2), (int)(w * y2+ w/2));
@@ -167,9 +136,9 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			double di = (x % w) / squareWidth() ;
 			int j = y / w ;
 			double dj = (y % w) / squareWidth() ;
-			if (0 <= i && i < velikostIgre &&
+			if (0 <= i && i < Vodja.igra.velikostPolja() &&
 					0.5 * LINE_WIDTH < di && di < 1.0 - 0.5 * LINE_WIDTH &&
-					0 <= j && j < velikostIgre && 
+					0 <= j && j < Vodja.igra.velikostPolja() && 
 					0.5 * LINE_WIDTH < dj && dj < 1.0 - 0.5 * LINE_WIDTH) {
 				Vodja.clovekovaPoteza (new Koordinati(i, j));
 			}

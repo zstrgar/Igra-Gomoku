@@ -1,6 +1,5 @@
 package inteligenca;
 
-import java.util.List;
 import java.util.Set;
 
 import logika.Igra;

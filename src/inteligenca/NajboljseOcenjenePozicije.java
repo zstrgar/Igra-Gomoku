@@ -1,8 +1,7 @@
 package inteligenca;
 
-import java.util.List;
 import java.util.LinkedList;
-import inteligenca.OcenjenaPozicija;
+import java.util.List;
 
 public class NajboljseOcenjenePozicije {
 	

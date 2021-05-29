@@ -4,6 +4,7 @@ import logika.Igra;
 import logika.Igralec;
 import logika.Polje;
 import logika.Vrsta;
+import vodja.Vodja;
 
 public class OcenjevalecPozicije {
 	
@@ -69,7 +70,7 @@ public class OcenjevalecPozicije {
     if (nizVrsta.contains("PCCCP")) statistikaCrni.threeInRow++;
     
 
-    Vrsta razsirjenaVrsta = razsiriVrsto(vrsta, igra.N);
+    Vrsta razsirjenaVrsta = razsiriVrsto(vrsta, Vodja.igra.velikostPolja());
 
     if (razsirjenaVrsta != null) {
       String nizRazsirjenaVrsta = vrstaToString(razsirjenaVrsta, igra);

@@ -3,6 +3,7 @@ package logika;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import splosno.Koordinati;
@@ -11,10 +12,10 @@ import splosno.Koordinati;
 public class Igra {
 
   //Velikost igralne plošče
-  public int N = 15;
-
+  private int N = 15;
+  
   //Koliko žetonov želimo imeti v vrsti, da zmagamo
-  public int M = 5;
+  private int M = 5;
   
   //Nastavimo okolico, kjer iščemo možne poteze (2 - gleda okolico za 2 stran od zapolnjenih polj)
   // TODO: ce das kot argument lahko isces enkrat vec enkrat manj 
@@ -24,7 +25,7 @@ public class Igra {
   private Polje[][] plosca;
 
   //Igralec (crn, bel), ki je trenutno na potezi
-  public Igralec igralecNaPotezi;
+  private Igralec igralecNaPotezi;
 
   // Pomožen seznam vseh vrst na plošči.
   public static final List<Vrsta> VRSTE = new LinkedList<Vrsta>();
@@ -45,8 +46,8 @@ public class Igra {
   }
 
   public Igra(int velikost, int kokVVrsto) {          //konstruktor
-    N=velikost;
-    M=kokVVrsto;
+    this.N=velikost;
+    this.M=kokVVrsto;
     zazeniPlosco();
     plosca = new Polje[N][N];
     for (int i = 0; i < N; i++) {
@@ -114,6 +115,17 @@ public class Igra {
     return igralecNaPotezi;
   }
 
+  
+  public int velikostPolja() {
+    return this.N;
+  }
+  public int kokVVrsto() {
+    return this.M;
+  }
+
+  public void spremeniVelikostPolja(int n) {
+    this.N = n;
+  }
 
   /**
    * metoda moznePoteze() vrne seznam List<Koordinati> moznih potez
@@ -233,6 +245,10 @@ public class Igra {
    * @return true ce je veljavna, false, ce ni
    */
   public boolean jeVeljavnaPoteza(Koordinati poteza) {   //NVM ce se sploh rabi to metodo
+    if (poteza == null) { // TODO: debug (racunalnik nima poteze ko spremenis velikost polja)
+      System.out.println("null poteza");
+      return false;
+    }
 		if (poteza.getX() < 0 || poteza.getX() >= N) {
 			return false;
 		}
@@ -262,6 +278,20 @@ public class Igra {
       return false;
     }
   }
+
+  // TODO: to bomo uporabili v montecarlo
+  /**
+   * izmed moznih potez odigra nakljucno potezo
+   * 
+   * @param moznePoteze
+   */
+  public void odigrajRandom(List<Koordinati> moznePoteze) {
+    Random random = new Random();
+		int randomIndex = random.nextInt(moznePoteze.size());
+    Koordinati poteza = moznePoteze.get(randomIndex);
+    plosca[poteza.getX()][poteza.getY()] = igralecNaPotezi.getPolje();
+    igralecNaPotezi = igralecNaPotezi.nasprotnik();
+	}
 
 
 }
