@@ -1,6 +1,7 @@
 package vodja;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
@@ -18,25 +19,21 @@ public class Vodja {
 	
 	// private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 	
-	public static Map<Igralec, VrstaIgralca> vrstaIgralca = null;
+	public static Map<Igralec, VrstaIgralca> vrstaIgralca;
 		
 	public static GlavnoOkno okno;
 	
-	public static Igra igra = new Igra();
+	public static Igra igra = null;
 	
 	public static boolean clovekNaVrsti = false;
 
 	public static int zamikRacunalnikovePoteze = 0;
 		
-
 	public static void igramoNovoIgro () {
 		igra = new Igra ();
 		igramo ();
 	}
-	public static void igramoNovoIgro(int n, int m){
-		igra=new Igra(n, m);
-		igramo();
-	}	
+	
 
 
 	public static void igramo () {
@@ -47,24 +44,21 @@ public class Vodja {
 		case NEODLOCENO: 
 			return; // odhajamo iz metode igramo
 		case V_TEKU: 
-			Igralec igralec = igra.igralecNaPotezi();
-			if (vrstaIgralca != null) {
-				VrstaIgralca vrstaNaPotezi = vrstaIgralca.get(igralec);
-				switch (vrstaNaPotezi) {
-					case C: 
-						clovekNaVrsti = true;
-						break;
-					case R:
-						racunalnikovaPoteza();
-						break;
-				}
+			Igralec igralec = igra.igralecNaPotezi;
+			VrstaIgralca vrstaNaPotezi = vrstaIgralca.get(igralec);
+			switch (vrstaNaPotezi) {
+			case C: 
+				clovekNaVrsti = true;
+				break;
+			case R:
+				racunalnikovaPoteza();
+				break;
 			}
 		}
 	}
 	
 	// private static Random random = new Random ();
 	
-	// opomba: lahko menjamo inteligenco med igro
 	public static Inteligenca racunalnikovaInteligenca = new Inteligenca();
 
 	// swing worker
@@ -72,12 +66,9 @@ public class Vodja {
 		Igra zacetnaIgra = igra;
 		SwingWorker<Koordinati, Void> worker = new SwingWorker<Koordinati, Void> () {
 			@Override
-			protected Koordinati doInBackground() throws Exception {
+			protected Koordinati doInBackground() {
 				Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra);
-				// TODO: debug
-				System.out.println("zamik racunalniske poteze: " + zamikRacunalnikovePoteze);
 				try {TimeUnit.SECONDS.sleep(zamikRacunalnikovePoteze);} catch (Exception e) {};
-				// TODO: mogoce daj to v intelicenco
 				// List<Koordinati> moznePoteze = igra.moznePoteze();        // tole se nuca za "algoritem" random, ko rač. random izbira svoje poteze
 				//int randomIndex = random.nextInt(moznePoteze.size());
 				//return moznePoteze.get(randomIndex);

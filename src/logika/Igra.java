@@ -3,7 +3,6 @@ package logika;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import splosno.Koordinati;
@@ -12,65 +11,29 @@ import splosno.Koordinati;
 public class Igra {
 
   //Velikost igralne plošče
-  private int N = 15;
-  
+  public static final int N = 15;
+
   //Koliko žetonov želimo imeti v vrsti, da zmagamo
-  private int M = 5;
+  public static final int M = 5;
   
   //Nastavimo okolico, kjer iščemo možne poteze (2 - gleda okolico za 2 stran od zapolnjenih polj)
-  // TODO: ce das kot argument lahko isces enkrat vec enkrat manj 
-  private final int OKOLICA_MOZNE_POTEZE = 2;
+  private static final int OKOLICA_MOZNE_POTEZE = 2;
 
   //Igralna plosca, ki sestoji iz polj(prazno, crno, belo)
   private Polje[][] plosca;
 
   //Igralec (crn, bel), ki je trenutno na potezi
-  private Igralec igralecNaPotezi;
+  public Igralec igralecNaPotezi;
 
   // Pomožen seznam vseh vrst na plošči.
   public static final List<Vrsta> VRSTE = new LinkedList<Vrsta>();
 
-
-  /**
-   * Nova igra, na začetku je prazna in na potezi je BEL.
-   */
-  public Igra() {          //konstruktor
-    zazeniPlosco();
-    plosca = new Polje[N][N];
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
-        plosca[i][j] = Polje.PRAZNO;
-      }
-    }
-    igralecNaPotezi = Igralec.BEL;
-  }
-
-  public Igra(int velikost, int kokVVrsto) {          //konstruktor
-    this.N=velikost;
-    this.M=kokVVrsto;
-    zazeniPlosco();
-    plosca = new Polje[N][N];
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
-        plosca[i][j] = Polje.PRAZNO;
-      }
-    }
-    igralecNaPotezi = Igralec.BEL;
-  }
+  public LinkedList<Koordinati> odigranePoteze;
 
 
-  public Igra(Igra igra) {    // ustvarimo kopijo igre!
-    this.plosca = new Polje[N][N];
-    for (int i = 0; i < N; i++) {
-      for (int j = 0; j < N; j++) {
-        this.plosca[i][j] = igra.plosca[i][j];
-      }
-    }
-    this.igralecNaPotezi = igra.igralecNaPotezi;
-  }
 
 
-  private void zazeniPlosco(){
+  static {
     // Ta koda se izvede na začetku, ko se prvič požene program.
     // Njena naloga je, da prepozna vrednosti statičnih
     // spremenljivk.
@@ -99,6 +62,34 @@ public class Igra {
     }
   }
 
+
+  /**
+   * Nova igra, na začetku je prazna in na potezi je BEL.
+   */
+  public Igra() {          //konstruktor
+    plosca = new Polje[N][N];
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        plosca[i][j] = Polje.PRAZNO;
+      }
+    }
+    igralecNaPotezi = Igralec.BEL;
+    this.odigranePoteze = new LinkedList<Koordinati>();
+  }
+
+  public Igra(Igra igra) {    // ustvarimo kopijo igre!
+    this.plosca = new Polje[N][N];
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        this.plosca[i][j] = igra.plosca[i][j];
+      }
+    }
+    this.igralecNaPotezi = igra.igralecNaPotezi;
+    this.odigranePoteze = new LinkedList<Koordinati>();
+    for (Koordinati p : igra.odigranePoteze) this.odigranePoteze.add(p);
+  }
+
+
   
   /**
    * @return igralna plosca
@@ -115,17 +106,6 @@ public class Igra {
     return igralecNaPotezi;
   }
 
-  
-  public int velikostPolja() {
-    return this.N;
-  }
-  public int kokVVrsto() {
-    return this.M;
-  }
-
-  public void spremeniVelikostPolja(int n) {
-    this.N = n;
-  }
 
   /**
    * metoda moznePoteze() vrne seznam List<Koordinati> moznih potez
@@ -245,10 +225,6 @@ public class Igra {
    * @return true ce je veljavna, false, ce ni
    */
   public boolean jeVeljavnaPoteza(Koordinati poteza) {   //NVM ce se sploh rabi to metodo
-    if (poteza == null) { // TODO: debug (racunalnik nima poteze ko spremenis velikost polja)
-      System.out.println("null poteza");
-      return false;
-    }
 		if (poteza.getX() < 0 || poteza.getX() >= N) {
 			return false;
 		}
@@ -270,28 +246,34 @@ public class Igra {
    * @return true, ce je bila poteza odigrana, false - ce ni
    */
   public boolean odigraj(Koordinati poteza) {
-    if (jeVeljavnaPoteza(poteza)) {
+    if (this.jeVeljavnaPoteza(poteza)) {
       plosca[poteza.getX()][poteza.getY()] = igralecNaPotezi.getPolje();
+      // Potezo dodamo v odigranePoteze.
+			this.odigranePoteze.add(poteza);
       igralecNaPotezi = igralecNaPotezi.nasprotnik();
       return true;
-    } else {
-      return false;
-    }
+    } else return false;
   }
 
-  // TODO: to bomo uporabili v montecarlo
-  /**
-   * izmed moznih potez odigra nakljucno potezo
-   * 
-   * @param moznePoteze
-   */
-  public void odigrajRandom(List<Koordinati> moznePoteze) {
-    Random random = new Random();
-		int randomIndex = random.nextInt(moznePoteze.size());
-    Koordinati poteza = moznePoteze.get(randomIndex);
-    plosca[poteza.getX()][poteza.getY()] = igralecNaPotezi.getPolje();
-    igralecNaPotezi = igralecNaPotezi.nasprotnik();
-	}
 
+  /**
+   * razveljavi zadnjo potezo
+   * @return
+   */
+	public boolean razveljaviPotezo() {
+		// if (lahko razveljavimo potezo)
+		if ((this.odigranePoteze.size() >= 1) && (this.stanje() == Stanje.V_TEKU)) {
+			// odstranimo zadnjo potezo in jo shranimo v spremenljivko
+			Koordinati zadnjaPoteza = this.odigranePoteze.removeLast();
+			// ustrezno polje na plošči nastavimo na prazno
+			this.plosca[zadnjaPoteza.getX()][zadnjaPoteza.getY()] = Polje.PRAZNO;
+			// zamenjamo igralca na potezi.
+			this.igralecNaPotezi = this.igralecNaPotezi.nasprotnik();
+			return true;
+		}
+		// nobena poteza še ni bila odigrana
+		return false;
+	}
+		
 
 }

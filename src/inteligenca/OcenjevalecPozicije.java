@@ -4,7 +4,6 @@ import logika.Igra;
 import logika.Igralec;
 import logika.Polje;
 import logika.Vrsta;
-import vodja.Vodja;
 
 public class OcenjevalecPozicije {
 	
@@ -70,7 +69,7 @@ public class OcenjevalecPozicije {
     if (nizVrsta.contains("PCCCP")) statistikaCrni.threeInRow++;
     
 
-    Vrsta razsirjenaVrsta = razsiriVrsto(vrsta, Vodja.igra.velikostPolja());
+    Vrsta razsirjenaVrsta = razsiriVrsto(vrsta);
 
     if (razsirjenaVrsta != null) {
       String nizRazsirjenaVrsta = vrstaToString(razsirjenaVrsta, igra);
@@ -127,7 +126,7 @@ public class OcenjevalecPozicije {
    * @param vrsta
    * @return razsirjena vrsta, če jo lahko razširi, sicer vrne null
    */
-  private Vrsta razsiriVrsto(Vrsta vrsta, int velikostPlosce) {
+  private Vrsta razsiriVrsto(Vrsta vrsta) {
 	  // preberemo smer dane vrste
 	  int[] smerVrste = vrsta.smerVrste();
 	  int dx = smerVrste[0];
@@ -136,7 +135,7 @@ public class OcenjevalecPozicije {
 	  int povecanX = vrsta.x[vrsta.x.length - 1] + dx;
 	  int povecanY = vrsta.y[vrsta.y.length - 1] + dy;
 
-	  if ((0 <= povecanX && povecanX < velikostPlosce) && (0 <= povecanY && povecanY < velikostPlosce)) {
+	  if ((0 <= povecanX && povecanX < Igra.N) && (0 <= povecanY && povecanY < Igra.N)) {
 		  //povečamo vrsto za 1
 		  int[] razsirjeniX = new int[vrsta.x.length + 1];
 		  int[] razsirjeniY = new int[vrsta.y.length + 1];

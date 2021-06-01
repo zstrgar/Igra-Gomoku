@@ -7,8 +7,8 @@ import splosno.Koordinati;
 
 public class Inteligenca extends KdoIgra{  //podrazred razreda splosno.KdoIgra
 	
-	protected int algoritem = 1; // 1=alphabeta, 2=minimax
-
+	protected int algoritem = 1;
+	
 	public Inteligenca() {
 		super("Algebros");  // ime skupine
 	}
@@ -19,19 +19,15 @@ public class Inteligenca extends KdoIgra{  //podrazred razreda splosno.KdoIgra
 	 * @return
 	 * @throws Exception
 	 */
-	public Koordinati izberiPotezo(Igra igra) throws Exception {
-		// TODO debug lahko izbrises da ne izpisuje v konzolo
-		// TODO dodaj MonteCarlo in ostale
-		System.out.println("Izbrani algoritem je: " + algoritem);
-		if (algoritem==1) return new Alphabeta(2).izberiPotezo(igra);
+	public Koordinati izberiPotezo(Igra igra) {
+		if (algoritem == 1) return new Alphabeta(2).izberiPotezo(igra);
 		else if (algoritem == 2) return new Minimax(2).izberiPotezo(igra);
-		else{
-			throw new Exception("Napačna izbira algoritma!");
-		}
+		else return new Alphabeta(2).izberiPotezo(igra);
 	}
 
 	public void zamenjajAlgoritem(int i) {
 		this.algoritem = i;
 	}
+
 
 }
