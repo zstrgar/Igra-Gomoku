@@ -14,10 +14,7 @@ import javax.swing.JPanel;
 import logika.Igra;
 import logika.Vrsta;
 import splosno.Koordinati;
-import vodja.Vodja;;
-
-
-// TODO: mouseclicked izbolsi
+import vodja.Vodja;
 
 /**
  *  Risanje plošče
@@ -112,17 +109,14 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		if (vrsta != null) {
 			int x1 = vrsta.x[0];
 			int y1 = vrsta.y[0];
-			// TODO da bo neodvisno od Igre (seprevi ko spremenis velikost igre)
 			int x2 = vrsta.x[Igra.M-1];
 			int y2 = vrsta.y[Igra.M-1];
 			g2.setColor(new Color(255, 51, 51));
 			g2.setStroke(new BasicStroke((float) (w/8)));
 			g2.drawLine((int)(w * x1 + leftMargin), (int)(w * y1 + topMargin), (int)(w * x2 + leftMargin), (int)(w * y2 + topMargin));
 		}		
-		
 	}
 	
-	// TODO 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (Vodja.clovekNaVrsti) {
@@ -144,6 +138,10 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 				Vodja.clovekovaPoteza (new Koordinati(i, j));
 			}
 		}
+		// TODO: bliznjica za razveljaviPotezo (IZBRISI)
+		double w = squareWidth();
+		if (e.getX()+w/2>getWidth() && e.getY()+w/2>getHeight()) Vodja.igra.razveljaviPotezo();
+		repaint();
 	}
 
 	// metode za spremembo barve

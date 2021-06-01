@@ -19,7 +19,7 @@ public class Vodja {
 	
 	// private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 	
-	public static Map<Igralec, VrstaIgralca> vrstaIgralca;
+	public static Map<Igralec, VrstaIgralca> vrstaIgralca = null;
 		
 	public static GlavnoOkno okno;
 	
@@ -34,6 +34,10 @@ public class Vodja {
 		igramo ();
 	}
 	
+	public static void igramoNovoIgro (int n, int m) {
+		igra = new Igra (n, m);
+		igramo ();
+	}
 
 
 	public static void igramo () {
@@ -45,6 +49,12 @@ public class Vodja {
 			return; // odhajamo iz metode igramo
 		case V_TEKU: 
 			Igralec igralec = igra.igralecNaPotezi;
+			// preverimo ce so ze izbrani igralci
+			if (Vodja.vrstaIgralca==null) {
+				// TODO: debug lahko zbrises print
+				System.out.println("Izberi igro");
+				break;
+			}
 			VrstaIgralca vrstaNaPotezi = vrstaIgralca.get(igralec);
 			switch (vrstaNaPotezi) {
 			case C: 

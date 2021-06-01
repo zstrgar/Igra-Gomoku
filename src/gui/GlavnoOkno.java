@@ -169,13 +169,25 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.R);
 			Vodja.igramoNovoIgro();
 		} else if (source == menuVelikostIgre) {
-			String i = JOptionPane.showInputDialog("Izberite velikost polja N");
+			int n = 15;
+			String i = JOptionPane.showInputDialog("Napišite velikost polja N");
 			if (i!=null && !i.equals("")) {
 				try {
-					if (Integer.parseInt(i) > 4) {
-						int n = Integer.parseInt(i);
-						// TODO
-						// Vodja.igramoNovoIgro(n,5);
+					if (Integer.parseInt(i) > 2) {
+						n = Integer.parseInt(i);
+					}
+					else {JOptionPane.showMessageDialog(this, "Neveljavna izbira!");}		   
+				}
+				catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(this, "Neveljavna izbira!");
+				}
+			}
+			String j = JOptionPane.showInputDialog("Napišite koliko v vrsto");
+			if (j!=null && !j.equals("")) {
+				try {
+					if (2<Integer.parseInt(j) && Integer.parseInt(j) <= n) {
+						int m = Integer.parseInt(j);
+						Vodja.igramoNovoIgro(n, m);
 					}
 					else {JOptionPane.showMessageDialog(this, "Neveljavna izbira!");}		   
 				}

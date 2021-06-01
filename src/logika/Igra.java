@@ -11,10 +11,10 @@ import splosno.Koordinati;
 public class Igra {
 
   //Velikost igralne plošče
-  public static final int N = 15;
+  public static int N = 15;
 
   //Koliko žetonov želimo imeti v vrsti, da zmagamo
-  public static final int M = 5;
+  public static int M = 5;
   
   //Nastavimo okolico, kjer iščemo možne poteze (2 - gleda okolico za 2 stran od zapolnjenih polj)
   private static final int OKOLICA_MOZNE_POTEZE = 2;
@@ -26,18 +26,18 @@ public class Igra {
   public Igralec igralecNaPotezi;
 
   // Pomožen seznam vseh vrst na plošči.
-  public static final List<Vrsta> VRSTE = new LinkedList<Vrsta>();
+  public static List<Vrsta> VRSTE;
 
   public LinkedList<Koordinati> odigranePoteze;
 
 
 
 
-  static {
+  public void zazeniPlosco() {
     // Ta koda se izvede na začetku, ko se prvič požene program.
     // Njena naloga je, da prepozna vrednosti statičnih
     // spremenljivk.
-
+    VRSTE = new LinkedList<Vrsta>();
     // Prepoznavanje, če smo dobili M v vrsto.
     int[][] mozneSmeri = {{1, 0}, {0, 1}, {1, 1},
         {1, -1}};  //smer {1,0} -> desno, {0,1} -> gor, {1,1} -> desno gor, {1, -1} -> desno dol
@@ -60,6 +60,8 @@ public class Igra {
         }
       }
     }
+    // TODO debug
+    System.out.println(VRSTE.size());
   }
 
 
@@ -67,6 +69,21 @@ public class Igra {
    * Nova igra, na začetku je prazna in na potezi je BEL.
    */
   public Igra() {          //konstruktor
+    zazeniPlosco();
+    plosca = new Polje[N][N];
+    for (int i = 0; i < N; i++) {
+      for (int j = 0; j < N; j++) {
+        plosca[i][j] = Polje.PRAZNO;
+      }
+    }
+    igralecNaPotezi = Igralec.BEL;
+    this.odigranePoteze = new LinkedList<Koordinati>();
+  }
+
+  public Igra(int n, int m) {          //konstruktor
+    N = n;
+    M = m;
+    zazeniPlosco();
     plosca = new Polje[N][N];
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
