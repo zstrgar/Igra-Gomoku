@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
+import java.awt.*;
 
 import logika.Igra;
 import logika.Vrsta;
@@ -54,12 +55,16 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		double d = w * (1.0 - 2.0 * PADDING); // premer 
 		double x = w * (i-1 + PADDING)+leftMargin - w/2;
 		double y = w * (j-1 + PADDING)+topMargin - w/2;
-		g2.setColor(barva);
+		GradientPaint gradient;
+		if (barva==Color.white) gradient = new GradientPaint ((float)x, (float)y, Color.white, (float)(x+w), (float)(y+w), Color.gray); 
+		else gradient = new GradientPaint ((float)x, (float)y, Color.white, (float)(x+w/2), (float)(y+w/2), barva); 
+		g2.setPaint(gradient);
+		// g2.setColor(barva);
 		g2.fillOval((int)x, (int)y, (int)d , (int)d);
-		if (rdecaObroba) g2.setColor(Color.red);
-		else g2.setColor(Color.black);
-		g2.setStroke(new BasicStroke(3));
-		g2.drawOval((int)x, (int)y, (int)d, (int)d);
+	// 	if (rdecaObroba) g2.setColor(Color.red);
+	// 	else g2.setColor(Color.black);
+	// 	g2.setStroke(new BasicStroke(3));
+	// 	g2.drawOval((int)x, (int)y, (int)d, (int)d);
 	}
 	
 	@Override
