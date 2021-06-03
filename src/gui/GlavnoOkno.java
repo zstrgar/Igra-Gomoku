@@ -34,23 +34,29 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	private JLabel status;
 	
 	// Izbire v menuju
-	// kdo igra s kom
-	private JMenuItem menuClovekRacunalnik, menuRacunalnikClovek, menuClovekClovek, menuRacunalnikRacunalnik;
+	
+	// nastavitev igralca (lahko je človek, računlanik z random potezami - level1, minimax alg. - level 2, alphabeta alg. - level 3)
+	private JMenuItem menuIgralec1Clovek, menuIgralec1Level1, menuIgralec1Level2, menuIgralec1Level3;
+	private JMenuItem menuIgralec2Clovek, menuIgralec2Level1, menuIgralec2Level2, menuIgralec2Level3;
+	
 	// nastavitve
-	private JMenuItem menuVelikostIgre, menuImeIgralca1, menuImeIgralca2, menuZamikRacunalnikovePoteze;
-	// inteligence
-	private JMenuItem menuAlfaBeta, menuMiniMax;
+	private JMenuItem menuVelikostIgre, menuImeIgralca1, menuImeIgralca2; 
+	
+	//hitrost
+	private JMenuItem menuHitrostPocasna, menuHitrostZmerna, menuHitrostHitra;
+	
 	// barve
 	private JMenuItem menuBarvaZetonov1,menuBarvaZetonov2, menuBarvaPolja;
+	
 	// imena igralcev
 	private String igralec1 = "BEL";
-	private String igralec2 = "CRN";
+	private String igralec2 = "ČRN";
 
-	private JMenuItem menuRazveljaviPotezo;
+	//gumba
+	private JButton gumbZacni;
 	private JButton gumbRazveljavi;
 
 	
-
 	/**
 	 * Ustvari novo glavno okno in prični igrati igro.
 	 */
@@ -64,44 +70,49 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		JMenuBar menu_bar = new JMenuBar();
 		setJMenuBar(menu_bar);
 		
-
-		JMenu menuIgra = dodajMenu(menu_bar, "Nova igra");
-		JMenu menuNastavitve = dodajMenu(menu_bar, "Nastavitve");
+		//drop down menuji
+		JMenu menuIgralec1 = dodajMenu(menu_bar, " 1. igralec (BEL) ");
+		JMenu menuIgralec2 = dodajMenu(menu_bar, " 2. igralec (ČRN) ");
 		
-
-
-		// dodajamo moznosti na menuIgra (gumb nova igra)
-		menuClovekRacunalnik = dodajMenuItem(menuIgra, "Človek – računalnik");
-		menuRacunalnikClovek = dodajMenuItem(menuIgra, "Računalnik – človek");
-		menuClovekClovek = dodajMenuItem(menuIgra, "Človek – človek");
-		menuRacunalnikRacunalnik = dodajMenuItem(menuIgra, "Računalnik – računalnik");
+		gumbZacni = dodajGumb(menu_bar, "Začni igro");
+		
+		JMenu menuNastavitve = dodajMenu(menu_bar, "  Nastavitve");
+		
+		// TODO igram se		
+		//gumbRazveljavi = dodajGumb(menu_bar, "Razveljavi");
+		
+		// dodajamo moznosti na menuIgralec1
+		menuIgralec1Clovek = dodajMenuItem(menuIgralec1, "Človek");
+		menuIgralec1Level1 = dodajMenuItem(menuIgralec1, "Računalnik - level 1");
+		menuIgralec1Level2 = dodajMenuItem(menuIgralec1, "Računalnik - level 2");
+		menuIgralec1Level3 = dodajMenuItem(menuIgralec1, "Računalnik - level 3");
+		
+		// dodajamo moznosti na menuIgralec1
+		menuIgralec2Clovek = dodajMenuItem(menuIgralec2, "Človek");
+		menuIgralec2Level1 = dodajMenuItem(menuIgralec2, "Računalnik - level 1");
+		menuIgralec2Level2 = dodajMenuItem(menuIgralec2, "Računalnik - level 2");
+		menuIgralec2Level3 = dodajMenuItem(menuIgralec2, "Računalnik - level 3");
+		
+		//dodajamo moznosti na menu Hitrost igre
+		JMenu menuHitrostIgre = dodajMenuVMenu(menuNastavitve, "Hitrost igre");
+		menuHitrostPocasna = dodajMenuItem(menuHitrostIgre, "Počasna igra");
+		menuHitrostZmerna = dodajMenuItem(menuHitrostIgre, "Zmerna igra");
+		menuHitrostHitra = dodajMenuItem(menuHitrostIgre, "Hitra igra");
+		
 		// dodajamo moznosti na menuNastavitve
-		menuVelikostIgre = dodajMenuItem(menuNastavitve, "Nastavi velikost polja");
-		// imena igralcev
-		JMenu menuImenaIgralcev = dodajMenuVMenu(menuNastavitve, "Nastavi imena igralcev");
-		menuImeIgralca1 = dodajMenuItem(menuImenaIgralcev, "Ime začetnega igralca");
-		menuImeIgralca2 = dodajMenuItem(menuImenaIgralcev, "Ime drugega igralca");
-		// algoritmi
-		JMenu menuAlgoritem = dodajMenuVMenu(menuNastavitve, "Zamenjaj algoritem");
-		menuAlfaBeta = dodajMenuItem(menuAlgoritem, "AlfaBeta");
-		menuMiniMax = dodajMenuItem(menuAlgoritem, "MiniMax");
-		dodajMenuItem(menuAlgoritem, "Random move");
+		menuVelikostIgre = dodajMenuItem(menuNastavitve, "Nastavi velikost polja...");
 		
-		menuZamikRacunalnikovePoteze = dodajMenuItem(menuNastavitve, "Nastavi zamik računalnika");
+		// dodajamo moznosti na menu imena igralcev
+		JMenu menuImenaIgralcev = dodajMenuVMenu(menuNastavitve, "Nastavi imena igralcev");
+		menuImeIgralca1 = dodajMenuItem(menuImenaIgralcev, "Ime 1. igralca...");
+		menuImeIgralca2 = dodajMenuItem(menuImenaIgralcev, "Ime 2. igralca...");
+		
 		// dodajamo moznosti na menuBarve
 		JMenu menuBarve = dodajMenuVMenu(menuNastavitve, "Barve");
-		menuBarvaZetonov1 = dodajMenuItem(menuBarve, "Barva žetonov začetnega igralca");
-		menuBarvaZetonov2 = dodajMenuItem(menuBarve, "Barva žetonov drugega igralca");
-		menuBarvaPolja = dodajMenuItem(menuBarve, "Barva polja/ozadja");
+		menuBarvaZetonov1 = dodajMenuItem(menuBarve, "Barva žetonov 1. igralca...");
+		menuBarvaZetonov2 = dodajMenuItem(menuBarve, "Barva žetonov 2. igralca...");
+		menuBarvaPolja = dodajMenuItem(menuBarve, "Barva ozadja...");
 
-		menuRazveljaviPotezo = dodajMenuItem(menuNastavitve, "Razveljavi zadnjo potezo!");
-
-		// TODO igram se		
-		gumbRazveljavi = dodajGumb(menu_bar, "Razveljavi");
-
-	
-		
-		
 		
 		// igralno polje
 		polje = new IgralnoPolje();
@@ -109,7 +120,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		GridBagConstraints polje_layout = new GridBagConstraints();
 		polje_layout.gridx = 0;
 		polje_layout.gridy = 0;
-		polje_layout.anchor = GridBagConstraints.CENTER;  //tole sem mislila, da bi lahko dalo na sredo, ampak ni :(
+		polje_layout.anchor = GridBagConstraints.CENTER;
 		polje_layout.fill = GridBagConstraints.BOTH;
 		polje_layout.weightx = 1.0;	//ko je na 0, je centriran; ko je na 1 se povečuje z oknom
 		polje_layout.weighty = 1.0;	
@@ -124,7 +135,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		status_layout.anchor = GridBagConstraints.CENTER;
 		getContentPane().add(status, status_layout);
 		
-		status.setText("Izberite igro!");
+		status.setText("Določi igralca!");
 		
 	}
 	
@@ -163,27 +174,40 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		Object source = event.getSource();
-		if (source == menuClovekRacunalnik) {
-			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
-			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.C); 
-			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.R);
-			Vodja.igramoNovoIgro();
-		} else if (source == menuRacunalnikClovek) {
-			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
-			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.R); 
-			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.C);
-			Vodja.igramoNovoIgro();
-		} else if (source == menuClovekClovek) {
-			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
-			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.C); 
-			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.C);
-			Vodja.igramoNovoIgro();
-		} else if (source == menuRacunalnikRacunalnik) {
-			Vodja.vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
-			Vodja.vrstaIgralca.put(Igralec.BEL, VrstaIgralca.R); 
-			Vodja.vrstaIgralca.put(Igralec.CRN, VrstaIgralca.R);
-			Vodja.igramoNovoIgro();
-		} else if (source == menuVelikostIgre) {
+		VrstaIgralca vrstaIgralca1 = null;
+		VrstaIgralca vrstaIgralca2 = null;
+		
+		//nastavimo 1. igralca (belega)
+		if (source == menuIgralec1Clovek) {
+			vrstaIgralca1 = VrstaIgralca.C;
+			Vodja.vrstaIgralca.put(Igralec.BEL, vrstaIgralca1); 
+		} else if (source == menuIgralec1Level1) {
+			vrstaIgralca1 = VrstaIgralca.R1;
+			Vodja.vrstaIgralca.put(Igralec.BEL, vrstaIgralca1); 
+		} else if (source == menuIgralec1Level2) {
+			vrstaIgralca1 = VrstaIgralca.R2;
+			Vodja.vrstaIgralca.put(Igralec.BEL, vrstaIgralca1); 
+		} else if (source == menuIgralec1Level3) {
+			vrstaIgralca1 = VrstaIgralca.R3;
+			Vodja.vrstaIgralca.put(Igralec.BEL, vrstaIgralca1); 
+		
+		// nastavimo 2.igralca (črnega)
+		} else if (source == menuIgralec2Clovek) {
+			vrstaIgralca2 = VrstaIgralca.C;
+			Vodja.vrstaIgralca.put(Igralec.CRN, vrstaIgralca2);
+		} else if (source == menuIgralec2Level1) {
+			vrstaIgralca2 = VrstaIgralca.R1; 
+			Vodja.vrstaIgralca.put(Igralec.CRN, vrstaIgralca2);
+		} else if (source == menuIgralec2Level2) {
+			vrstaIgralca2 = VrstaIgralca.R2; 
+			Vodja.vrstaIgralca.put(Igralec.CRN, vrstaIgralca2);
+		} else if (source == menuIgralec2Level3) {
+			vrstaIgralca2 = VrstaIgralca.R3;
+			Vodja.vrstaIgralca.put(Igralec.CRN, vrstaIgralca2);	
+		} 
+		
+		//nastavimo Velikost igre	
+		else if (source == menuVelikostIgre) {
 			int n = 15;
 			String i = JOptionPane.showInputDialog("Napišite velikost polja N");
 			if (i!=null && !i.equals("")) {
@@ -211,119 +235,81 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 				}
 			}
 			
+		// nastavimo imena igralcev		
 		} else if (source == menuImeIgralca1) {
-			String i = JOptionPane.showInputDialog("Spremenite ime igralca 1");
+			String i = JOptionPane.showInputDialog("Spremenite ime 1. igralca");
 			preimenuj(true, i);
 		} else if (source == menuImeIgralca2) {
-			String i = JOptionPane.showInputDialog("Spremenite ime igralca 2");
+			String i = JOptionPane.showInputDialog("Spremenite ime 2. igralca");
 			preimenuj(false, i);
-			
-		// zamenjava algoritma
-		} else if (source == menuAlfaBeta) {
-			Vodja.racunalnikovaInteligenca.zamenjajAlgoritem(1);
-			this.status.setText("Algoritem: AlfaBeta");
-		} else if (source == menuMiniMax) {
-			Vodja.racunalnikovaInteligenca.zamenjajAlgoritem(2);
-			this.status.setText("Algoritem: MiniMax");
-			
-		} else if (source == menuZamikRacunalnikovePoteze) {
-			String i = JOptionPane.showInputDialog("Izberite čas računalnikove poteze v sekundah.");
-			if (i!=null && !i.equals("")) {
-				try {
-					int n = Integer.parseInt(i);
-					if (n >= 0) {
-						Vodja.zamikRacunalnikovePoteze = n;
-					}
-					else {JOptionPane.showMessageDialog(this, "Neveljavna izbira!");}
-				}
-				catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(this, "Neveljavna izbira!");
-				}
-			}
+		}
 		
-		} else if (source == menuRazveljaviPotezo) {
-			boolean bool1 = false;
-			boolean bool2 = false;
+		// nastavimo hitrost igre	
+		else if (source == menuHitrostPocasna) {
+			Vodja.zamikRacunalnikovePoteze = 5;
+		}  else if (source == menuHitrostZmerna) {
+			Vodja.zamikRacunalnikovePoteze = 2;
+		}  else if (source == menuHitrostHitra) {
+			Vodja.zamikRacunalnikovePoteze = 0;
+		
+//		} else if (source == gumbRazveljavi) {
+//			boolean bool1 = false;
+//			boolean bool2 = false;
+//			
+//			if (Vodja.igra == null || Vodja.vrstaIgralca == null) {
+//				this.status.setText("Najprej izberite željeno igro!");
+//			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
+//					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R) {
+//				this.status.setText("Ko igrata računalnika, potez ne morete razveljaviti");
+//			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
+//					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C) {
+//				bool1 = Vodja.igra.razveljaviPotezo();
+//				if (bool1) this.status.setText("Poteza uspešno razveljavljena.");
+//				else this.status.setText("Poteza ni bila razveljavljena. ");
+//			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
+//					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C
+//					&& Vodja.igra.igralecNaPotezi() == Igralec.CRN) {
+//				bool1 = Vodja.igra.razveljaviPotezo();
+//				bool2 = Vodja.igra.razveljaviPotezo();
+//				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
+//				else this.status.setText("Potezi nista bili razveljavljeni. ");
+//			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
+//					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R
+//					&& Vodja.igra.igralecNaPotezi() == Igralec.BEL) {
+//				bool1 = Vodja.igra.razveljaviPotezo();
+//				bool2 = Vodja.igra.razveljaviPotezo();
+//				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
+//				else this.status.setText("Potezi nista bili razveljavljeni. ");
+//			}
 			
-			if (Vodja.igra == null || Vodja.vrstaIgralca == null) {
-				this.status.setText("Najprej izberite željeno igro!");
-			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
-					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R) {
-				this.status.setText("Ko igrata računalnika, potez ne morete razveljaviti");
-			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
-					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C) {
-				bool1 = Vodja.igra.razveljaviPotezo();
-				if (bool1) this.status.setText("Poteza uspešno razveljavljena.");
-				else this.status.setText("Poteza ni bila razveljavljena. ");
-			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
-					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C
-					&& Vodja.igra.igralecNaPotezi() == Igralec.CRN) {
-				bool1 = Vodja.igra.razveljaviPotezo();
-				bool2 = Vodja.igra.razveljaviPotezo();
-				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
-				else this.status.setText("Potezi nista bili razveljavljeni. ");
-			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
-					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R
-					&& Vodja.igra.igralecNaPotezi() == Igralec.BEL) {
-				bool1 = Vodja.igra.razveljaviPotezo();
-				bool2 = Vodja.igra.razveljaviPotezo();
-				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
-				else this.status.setText("Potezi nista bili razveljavljeni. ");
-			}
+//			this.polje.repaint();
 			
-			this.polje.repaint();
-			
-		// TODO delete
-		} else if (source == gumbRazveljavi) {
-			boolean bool1 = false;
-			boolean bool2 = false;
-			
-			if (Vodja.igra == null || Vodja.vrstaIgralca == null) {
-				this.status.setText("Najprej izberite željeno igro!");
-			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
-					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R) {
-				this.status.setText("Ko igrata računalnika, potez ne morete razveljaviti");
-			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
-					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C) {
-				bool1 = Vodja.igra.razveljaviPotezo();
-				if (bool1) this.status.setText("Poteza uspešno razveljavljena.");
-				else this.status.setText("Poteza ni bila razveljavljena. ");
-			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
-					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C
-					&& Vodja.igra.igralecNaPotezi() == Igralec.CRN) {
-				bool1 = Vodja.igra.razveljaviPotezo();
-				bool2 = Vodja.igra.razveljaviPotezo();
-				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
-				else this.status.setText("Potezi nista bili razveljavljeni. ");
-			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
-					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R
-					&& Vodja.igra.igralecNaPotezi() == Igralec.BEL) {
-				bool1 = Vodja.igra.razveljaviPotezo();
-				bool2 = Vodja.igra.razveljaviPotezo();
-				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
-				else this.status.setText("Potezi nista bili razveljavljeni. ");
-			}
-			
-			this.polje.repaint();
-
-
-
-		} else if (source == menuBarvaZetonov1) {
+		// nastavimo barve
+		}else if (source == menuBarvaZetonov1) {
 			Color novaBarva = JColorChooser.showDialog(this, "Izberite barvo", polje.barvaIgralca1);
 			polje.barva1(novaBarva);
-			
 		} else if (source == menuBarvaZetonov2) {
 			Color novaBarva = JColorChooser.showDialog(this, "Izberite barvo", polje.barvaIgralca2);
 			polje.barva2(novaBarva);
-			
 		} else if (source == menuBarvaPolja) {
 			Color novaBarva = JColorChooser.showDialog(this, "Izberite barvo", polje.barvaOzadja);
 			polje.pobarvajOzadje(novaBarva);			
 		}
+		
+		//s klikom na gumbZacni (Začni igro) se preveri, ali sta oba igralca izbrana
+		else if(source == gumbZacni){
+			if (!Vodja.vrstaIgralca.containsKey(Igralec.BEL) || !Vodja.vrstaIgralca.containsKey(Igralec.BEL)) {
+				status.setText("Pozor! Nastavi vrsto obeh igralcev.");
+			}
+			else{Vodja.igramoNovoIgro();
+			}
+		}
 	}
 
 
-	// funckija za preimenovanje igralcev
+	/**
+	 * Metoda za preimenovanje igralcev
+	 */
 	public void preimenuj(boolean b, String niz) {
 		if (niz != null && !niz.equals("")) {
 		if (b) {

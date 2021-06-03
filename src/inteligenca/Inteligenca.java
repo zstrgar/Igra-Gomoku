@@ -9,8 +9,9 @@ public class Inteligenca extends KdoIgra{  //podrazred razreda splosno.KdoIgra
 	
 	protected int algoritem = 1;
 	
-	public Inteligenca() {
+	public Inteligenca(int algoritem) {
 		super("Algebros");  // ime skupine
+		this.algoritem = algoritem;
 	}
 	
 	/**
@@ -20,8 +21,9 @@ public class Inteligenca extends KdoIgra{  //podrazred razreda splosno.KdoIgra
 	 * @throws Exception
 	 */
 	public Koordinati izberiPotezo(Igra igra) {
-		if (algoritem == 1) return new Alphabeta(2).izberiPotezo(igra);
-		else if (algoritem == 2) return new Minimax(2).izberiPotezo(igra);
+		if(algoritem == 1) return new RandomInteligenca().izberiPotezo(igra);
+		if (algoritem == 2) return new RandomMinimax(2).izberiPotezo(igra);
+		else if (algoritem == 3) return new Alphabeta(2).izberiPotezo(igra);
 		else return new Alphabeta(2).izberiPotezo(igra);
 	}
 

@@ -50,6 +50,8 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 	
 	private final static double PADDING = 0.06;
 	
+	/** Narišemo žetone, gradientno obarvane.
+	 */
 	private void narisiKrog(Graphics2D g2, int i, int j, double leftMargin, double topMargin, Color barva, boolean rdecaObroba) {
 		double w = squareWidth();
 		double d = w * (1.0 - 2.0 * PADDING); // premer 
@@ -79,7 +81,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 
 		double w = squareWidth();
 		int velikostPolja = Igra.N;
-		// narisemo tako da bo na sredini
+		// narisemo tako, da bo na sredini
 		double leftMargin = Math.max((getWidth() - velikostPolja*w)/2, w);
 		double topMargin = Math.max((getHeight() - velikostPolja*w)/2, w);
 		

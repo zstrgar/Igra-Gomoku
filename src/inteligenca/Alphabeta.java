@@ -22,7 +22,7 @@ public class Alphabeta extends Inteligenca {
 	private int globina;
 	
 	public Alphabeta (int globina) {
-		super();
+		super(3);
 		this.globina = globina;
 	}
 	

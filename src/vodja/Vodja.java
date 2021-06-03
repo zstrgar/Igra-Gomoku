@@ -1,5 +1,6 @@
 package vodja;
 
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +20,7 @@ public class Vodja {
 	
 	// private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 	
-	public static Map<Igralec, VrstaIgralca> vrstaIgralca = null;
+	public static Map<Igralec, VrstaIgralca> vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 		
 	public static GlavnoOkno okno;
 	
@@ -60,28 +61,28 @@ public class Vodja {
 			case C: 
 				clovekNaVrsti = true;
 				break;
-			case R:
-				racunalnikovaPoteza();
+			case R1:
+				racunalnikovaPoteza(1);
+				break;
+			case R2:
+				racunalnikovaPoteza(2);
+				break;
+			case R3:
+				racunalnikovaPoteza(3);
 				break;
 			}
 		}
 	}
-	
-	// private static Random random = new Random ();
-	
-	public static Inteligenca racunalnikovaInteligenca = new Inteligenca();
 
 	// swing worker
-	public static void racunalnikovaPoteza() {
+	public static void racunalnikovaPoteza(int algoritem) {
 		Igra zacetnaIgra = igra;
+		Inteligenca racunalnikovaInteligenca = new Inteligenca(algoritem);
 		SwingWorker<Koordinati, Void> worker = new SwingWorker<Koordinati, Void> () {
 			@Override
 			protected Koordinati doInBackground() {
 				Koordinati poteza = racunalnikovaInteligenca.izberiPotezo(igra);
 				try {TimeUnit.SECONDS.sleep(zamikRacunalnikovePoteze);} catch (Exception e) {};
-				// List<Koordinati> moznePoteze = igra.moznePoteze();        // tole se nuca za "algoritem" random, ko rač. random izbira svoje poteze
-				//int randomIndex = random.nextInt(moznePoteze.size());
-				//return moznePoteze.get(randomIndex);
 				return poteza;
 			}
 			@Override

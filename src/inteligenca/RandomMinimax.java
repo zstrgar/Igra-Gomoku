@@ -13,13 +13,13 @@ public class RandomMinimax extends Inteligenca {
 	
 	private static final Random RANDOM = new Random();
 	
-	private static final int ZMAGA = 100; // vrednost zmage, več kot vsaka druga ocena pozicije
+	private static final int ZMAGA = 1000; // vrednost zmage, več kot vsaka druga ocena pozicije
 	private static final int NEODLOC = 0;  // vrednost neodločene igre	
 	
 	private int globina;
 	
 	public RandomMinimax (int globina) {
-		super();
+		super(2);
 		this.globina = globina;		
 	}
 	
