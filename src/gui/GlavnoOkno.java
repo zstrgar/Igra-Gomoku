@@ -331,20 +331,20 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 				if (Vodja.vrstaIgralca == null) break;
 				switch(Vodja.igra.igralecNaPotezi()) {
 					case BEL:
-						status.setText("Na potezi je " + igralec1 + " - " + Vodja.vrstaIgralca.get(Vodja.igra.igralecNaPotezi())); 
+						status.setText("Na potezi je " + "BEL" + " - " + igralec1); 
 						break;
 					case CRN:
-						status.setText("Na potezi je " + igralec2 + " - " + Vodja.vrstaIgralca.get(Vodja.igra.igralecNaPotezi())); 
+						status.setText("Na potezi je " + "ČRN" + " - " + igralec2); 
 						break;
 				}
 			break;
 			case ZMAGA_BEL: 
 				status.setText("Zmagal je BEL - " + 
-						Vodja.vrstaIgralca.get(Igralec.BEL));
+						igralec1);
 				break;
 			case ZMAGA_CRN: 
 				status.setText("Zmagal je ČRN - " + 
-						Vodja.vrstaIgralca.get(Igralec.CRN));
+						igralec2);
 				break;
 			}
 		}
