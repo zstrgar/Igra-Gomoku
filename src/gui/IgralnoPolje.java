@@ -61,10 +61,13 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		g2.setPaint(gradient);
 		// g2.setColor(barva);
 		g2.fillOval((int)x, (int)y, (int)d , (int)d);
-	// 	if (rdecaObroba) g2.setColor(Color.red);
-	// 	else g2.setColor(Color.black);
-	// 	g2.setStroke(new BasicStroke(3));
-	// 	g2.drawOval((int)x, (int)y, (int)d, (int)d);
+		if (rdecaObroba) {
+			g2.setColor(Color.red);
+			g2.setStroke(new BasicStroke(2));
+			g2.drawOval((int)x, (int)y, (int)d, (int)d);
+		}
+		// else g2.setColor(Color.black);
+
 	}
 	
 	@Override
