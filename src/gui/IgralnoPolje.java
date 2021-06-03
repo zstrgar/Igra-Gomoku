@@ -56,8 +56,8 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 		double x = w * (i-1 + PADDING)+leftMargin - w/2;
 		double y = w * (j-1 + PADDING)+topMargin - w/2;
 		GradientPaint gradient;
-		if (barva==Color.white) gradient = new GradientPaint ((float)x, (float)y, Color.white, (float)(x+w/2), (float)(y+w/2), new Color(200,200,200)); 
-		else gradient = new GradientPaint ((float)x, (float)y, new Color(230,230,230), (float)(x+w/2), (float)(y+w/2), barva); 
+		if (barva==Color.white) gradient = new GradientPaint ((float)x, (float)y, Color.white, (float)(x+w/3), (float)(y+w/3), new Color(200,200,200)); 
+		else gradient = new GradientPaint ((float)x, (float)y, new Color(230,230,230), (float)(x+w/3), (float)(y+w/3), barva); 
 		g2.setPaint(gradient);
 		// g2.setColor(barva);
 		g2.fillOval((int)x, (int)y, (int)d , (int)d);

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EnumMap;
 
+import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -46,6 +47,8 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	private String igralec2 = "CRN";
 
 	private JMenuItem menuRazveljaviPotezo;
+	private JButton gumbRazveljavi;
+
 	
 
 	/**
@@ -60,6 +63,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		// menu
 		JMenuBar menu_bar = new JMenuBar();
 		setJMenuBar(menu_bar);
+		
 
 		JMenu menuIgra = dodajMenu(menu_bar, "Nova igra");
 		JMenu menuNastavitve = dodajMenu(menu_bar, "Nastavitve");
@@ -91,6 +95,11 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		menuBarvaPolja = dodajMenuItem(menuBarve, "Barva polja/ozadja");
 
 		menuRazveljaviPotezo = dodajMenuItem(menuNastavitve, "Razveljavi zadnjo potezo!");
+
+		// TODO igram se		
+		gumbRazveljavi = dodajGumb(menu_bar, "Razveljavi");
+
+	
 		
 		
 		
@@ -142,6 +151,12 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		JMenu menu = new JMenu(naslov);
 		menu_kam.add(menu);
 		return menu;
+	}
+	private JButton dodajGumb(JMenuBar menu_bar, String napis) {
+		JButton gumb = new JButton(napis);
+		gumb.addActionListener(this);
+		menu_bar.add(gumb);
+		return gumb;
 	}
 
 	
@@ -257,6 +272,41 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			}
 			
 			this.polje.repaint();
+			
+		// TODO delete
+		} else if (source == gumbRazveljavi) {
+			boolean bool1 = false;
+			boolean bool2 = false;
+			
+			if (Vodja.igra == null || Vodja.vrstaIgralca == null) {
+				this.status.setText("Najprej izberite željeno igro!");
+			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
+					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R) {
+				this.status.setText("Ko igrata računalnika, potez ne morete razveljaviti");
+			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
+					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C) {
+				bool1 = Vodja.igra.razveljaviPotezo();
+				if (bool1) this.status.setText("Poteza uspešno razveljavljena.");
+				else this.status.setText("Poteza ni bila razveljavljena. ");
+			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
+					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C
+					&& Vodja.igra.igralecNaPotezi() == Igralec.CRN) {
+				bool1 = Vodja.igra.razveljaviPotezo();
+				bool2 = Vodja.igra.razveljaviPotezo();
+				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
+				else this.status.setText("Potezi nista bili razveljavljeni. ");
+			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
+					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R
+					&& Vodja.igra.igralecNaPotezi() == Igralec.BEL) {
+				bool1 = Vodja.igra.razveljaviPotezo();
+				bool2 = Vodja.igra.razveljaviPotezo();
+				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
+				else this.status.setText("Potezi nista bili razveljavljeni. ");
+			}
+			
+			this.polje.repaint();
+
+
 
 		} else if (source == menuBarvaZetonov1) {
 			Color novaBarva = JColorChooser.showDialog(this, "Izberite barvo", polje.barvaIgralca1);
