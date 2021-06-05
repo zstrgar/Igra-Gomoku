@@ -21,6 +21,8 @@ import logika.Igralec;
 import vodja.Vodja;
 import vodja.VrstaIgralca;
 
+// TODO: polepsaj menuBar (dodaj barve zetonov pri izbiri igralca (zraven kaze barvo)), vrstni red
+
 
 //@SuppressWarnings("serial")
 public class GlavnoOkno extends JFrame implements ActionListener {
@@ -79,7 +81,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		JMenu menuNastavitve = dodajMenu(menu_bar, "  Nastavitve");
 		
 		// TODO igram se		
-		//gumbRazveljavi = dodajGumb(menu_bar, "Razveljavi");
+		gumbRazveljavi = dodajGumb(menu_bar, "Razveljavi");
 		
 		// dodajamo moznosti na menuIgralec1
 		menuIgralec1Clovek = dodajMenuItem(menuIgralec1, "Človek");
@@ -177,33 +179,42 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		VrstaIgralca vrstaIgralca1 = null;
 		VrstaIgralca vrstaIgralca2 = null;
 		
+		// TODO mogoce je preimenovanje brezveze ampak probimo za foro
 		//nastavimo 1. igralca (belega)
 		if (source == menuIgralec1Clovek) {
 			vrstaIgralca1 = VrstaIgralca.C;
 			Vodja.vrstaIgralca.put(Igralec.BEL, vrstaIgralca1); 
+			preimenuj(true, "Človek");
 		} else if (source == menuIgralec1Level1) {
 			vrstaIgralca1 = VrstaIgralca.R1;
 			Vodja.vrstaIgralca.put(Igralec.BEL, vrstaIgralca1); 
+			preimenuj(true, "Naključna poteza");
 		} else if (source == menuIgralec1Level2) {
 			vrstaIgralca1 = VrstaIgralca.R2;
 			Vodja.vrstaIgralca.put(Igralec.BEL, vrstaIgralca1); 
+			preimenuj(true, "Random MiniMax");
 		} else if (source == menuIgralec1Level3) {
 			vrstaIgralca1 = VrstaIgralca.R3;
 			Vodja.vrstaIgralca.put(Igralec.BEL, vrstaIgralca1); 
+			preimenuj(true, "AlphaBeta");
 		
 		// nastavimo 2.igralca (črnega)
 		} else if (source == menuIgralec2Clovek) {
 			vrstaIgralca2 = VrstaIgralca.C;
 			Vodja.vrstaIgralca.put(Igralec.CRN, vrstaIgralca2);
+			preimenuj(false, "Človek");
 		} else if (source == menuIgralec2Level1) {
 			vrstaIgralca2 = VrstaIgralca.R1; 
 			Vodja.vrstaIgralca.put(Igralec.CRN, vrstaIgralca2);
+			preimenuj(false, "Naključna poteza");
 		} else if (source == menuIgralec2Level2) {
 			vrstaIgralca2 = VrstaIgralca.R2; 
 			Vodja.vrstaIgralca.put(Igralec.CRN, vrstaIgralca2);
+			preimenuj(false, "Random MiniMax");
 		} else if (source == menuIgralec2Level3) {
 			vrstaIgralca2 = VrstaIgralca.R3;
 			Vodja.vrstaIgralca.put(Igralec.CRN, vrstaIgralca2);	
+			preimenuj(false, "AlphaBeta");
 		} 
 		
 		//nastavimo Velikost igre	
@@ -252,37 +263,42 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		}  else if (source == menuHitrostHitra) {
 			Vodja.zamikRacunalnikovePoteze = 0;
 		
-//		} else if (source == gumbRazveljavi) {
-//			boolean bool1 = false;
-//			boolean bool2 = false;
-//			
-//			if (Vodja.igra == null || Vodja.vrstaIgralca == null) {
-//				this.status.setText("Najprej izberite željeno igro!");
-//			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
-//					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R) {
-//				this.status.setText("Ko igrata računalnika, potez ne morete razveljaviti");
-//			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
-//					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C) {
-//				bool1 = Vodja.igra.razveljaviPotezo();
-//				if (bool1) this.status.setText("Poteza uspešno razveljavljena.");
-//				else this.status.setText("Poteza ni bila razveljavljena. ");
-//			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.R
-//					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C
-//					&& Vodja.igra.igralecNaPotezi() == Igralec.CRN) {
-//				bool1 = Vodja.igra.razveljaviPotezo();
-//				bool2 = Vodja.igra.razveljaviPotezo();
-//				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
-//				else this.status.setText("Potezi nista bili razveljavljeni. ");
-//			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
-//					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.R
-//					&& Vodja.igra.igralecNaPotezi() == Igralec.BEL) {
-//				bool1 = Vodja.igra.razveljaviPotezo();
-//				bool2 = Vodja.igra.razveljaviPotezo();
-//				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
-//				else this.status.setText("Potezi nista bili razveljavljeni. ");
-//			}
+
+		// TODO se ostale moznosti
+		} else if (source == gumbRazveljavi) {
+			boolean bool1 = false;
+			boolean bool2 = false;
 			
-//			this.polje.repaint();
+			if (Vodja.igra == null || Vodja.vrstaIgralca == null) {
+				this.status.setText("Najprej izberite željeno igro!");
+			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
+					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C) {
+				// ko igrata dva cloveka razveljavimo le potezo zadnjega
+				bool1 = Vodja.igra.razveljaviPotezo();
+				if (bool1) this.status.setText("Poteza uspešno razveljavljena.");
+				else this.status.setText("Poteza ni bila razveljavljena. ");
+			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) != null
+					&& Vodja.vrstaIgralca.get(Igralec.CRN) == VrstaIgralca.C
+					&& Vodja.igra.igralecNaPotezi() == Igralec.CRN) {
+				// ko igrata clovek racunalnik razveljavimo od obeh
+				bool1 = Vodja.igra.razveljaviPotezo();
+				bool2 = Vodja.igra.razveljaviPotezo();
+				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
+				else this.status.setText("Potezi nista bili razveljavljeni. ");
+			} else if (Vodja.vrstaIgralca.get(Igralec.BEL) == VrstaIgralca.C
+					&& Vodja.vrstaIgralca.get(Igralec.CRN) != null
+					&& Vodja.igra.igralecNaPotezi() == Igralec.BEL) {
+				// ko igrata clovek racunalnik razveljavimo od obeh
+				bool1 = Vodja.igra.razveljaviPotezo();
+				bool2 = Vodja.igra.razveljaviPotezo();
+				if (bool1 && bool2) this.status.setText("Potezi razveljavljeni. ");
+				else this.status.setText("Potezi nista bili razveljavljeni. ");
+			}  else if (Vodja.vrstaIgralca.get(Igralec.BEL) != VrstaIgralca.C 
+						&& Vodja.vrstaIgralca.get(Igralec.CRN) != VrstaIgralca.C) { 
+				this.status.setText("Ko igrata računalnika, potez ne morete razveljaviti");
+			}
+			
+			this.polje.repaint();
 			
 		// nastavimo barve
 		}else if (source == menuBarvaZetonov1) {
