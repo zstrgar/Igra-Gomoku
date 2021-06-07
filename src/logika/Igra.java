@@ -31,13 +31,12 @@ public class Igra {
   public LinkedList<Koordinati> odigranePoteze;
 
 
-
-
   public void zazeniPlosco() {
     // Ta koda se izvede na začetku, ko se prvič požene program.
     // Njena naloga je, da prepozna vrednosti statičnih
     // spremenljivk.
     VRSTE = new LinkedList<Vrsta>();
+    
     // Prepoznavanje, če smo dobili M v vrsto.
     int[][] mozneSmeri = {{1, 0}, {0, 1}, {1, 1},
         {1, -1}};  //smer {1,0} -> desno, {0,1} -> gor, {1,1} -> desno gor, {1, -1} -> desno dol
@@ -60,7 +59,6 @@ public class Igra {
         }
       }
     }
-    // TODO debug
     System.out.println(VRSTE.size());
   }
 
@@ -68,7 +66,7 @@ public class Igra {
   /**
    * Nova igra, na začetku je prazna in na potezi je BEL.
    */
-  public Igra() {          //konstruktor
+  public Igra() {          				//konstruktor
     zazeniPlosco();
     plosca = new Polje[N][N];
     for (int i = 0; i < N; i++) {
@@ -94,7 +92,7 @@ public class Igra {
     this.odigranePoteze = new LinkedList<Koordinati>();
   }
 
-  public Igra(Igra igra) {    // ustvarimo kopijo igre!
+  public Igra(Igra igra) {    		// ustvarimo kopijo igre!
     this.plosca = new Polje[N][N];
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < N; j++) {
@@ -107,26 +105,17 @@ public class Igra {
   }
 
 
-  
-  /**
-   * @return igralna plosca
-   */
   public Polje[][] getPlosca() {
     return plosca;
   }
 
 
-  /**
-   * @return igralec, ki je na potezi
-   */
   public Igralec igralecNaPotezi() {
     return igralecNaPotezi;
   }
 
-
   /**
-   * metoda moznePoteze() vrne seznam List<Koordinati> moznih potez
-   *
+   * metoda moznePoteze() vrne množico Set<Koordinati> moznih potez omejene na oklico že odigranih potez
    * @return moznePoteze
    */
   public Set<Koordinati> moznePoteze() {
@@ -157,8 +146,7 @@ public class Igra {
 	  }
 
   /**
-   * metoda cigavaVrsta(Vrsta vrsta) vrne igralca, ki ima zmagovalno vrsto (5vVrsto)
-   *
+   * metoda cigavaVrsta(Vrsta vrsta) vrne igralca, ki ima zmagovalno vrsto (M v Vrsto)
    * @param Vrsta vrsta
    * @return Igralec (BEL ali CRN) ali null, ce ni zmagovalne vrste
    */
@@ -188,7 +176,6 @@ public class Igra {
 
   /**
    * metoda zmagovalnaVrsta() vrne zmagovalno vrsto (ce jo nek igralec ima)
-   *
    * @return zmagovalna vrsta, ali {@null}, ce je ni
    */
   public Vrsta zmagovalnaVrsta() {
@@ -204,7 +191,6 @@ public class Igra {
 
   /**
    * metoda Stanje() vrne trenutno stanje igre (ZMAGA, NEODLOCENO, V_TEKU)
-   *
    * @return trenutno stanje igre
    */
   public Stanje stanje() {
@@ -237,11 +223,10 @@ public class Igra {
   /**
    * metoda veljavnostPoteze(Koordinati poteza) preveri, ce je poteza veljavna, preveri, ce je polje
    * prazno in ce sta koordinati X in Y med 0 in N
-   *
    * @param poteza
    * @return true ce je veljavna, false, ce ni
    */
-  public boolean jeVeljavnaPoteza(Koordinati poteza) {   //NVM ce se sploh rabi to metodo
+  public boolean jeVeljavnaPoteza(Koordinati poteza) { 
 		if (poteza.getX() < 0 || poteza.getX() >= N) {
 			return false;
 		}
@@ -258,7 +243,6 @@ public class Igra {
   /**
    * metoda odigraj(Koordinati poteza) najprej preveri, ce je poteza veljavna ce je, spremeni
    * vrednost igralca na potezi ter ga nastavi na nasprotnika
-   *
    * @param poteza
    * @return true, ce je bila poteza odigrana, false - ce ni
    */

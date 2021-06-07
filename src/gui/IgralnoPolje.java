@@ -20,7 +20,7 @@ import vodja.Vodja;
 /**
  *  Risanje plošče
  */
-//@SuppressWarnings("serial")
+@SuppressWarnings("serial")
 public class IgralnoPolje extends JPanel implements MouseListener {
 
 	protected Color barvaIgralca1;
@@ -111,6 +111,7 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 			}
 
 		}	
+		
 		// če imamo zmagovalno vrsto, potegnemo crto
 		Vrsta vrsta = null;
 		if (Vodja.igra != null) {

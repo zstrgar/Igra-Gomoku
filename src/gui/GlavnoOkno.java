@@ -6,7 +6,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EnumMap;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -21,10 +20,8 @@ import logika.Igralec;
 import vodja.Vodja;
 import vodja.VrstaIgralca;
 
-// TODO: polepsaj menuBar (dodaj barve zetonov pri izbiri igralca (zraven kaze barvo)), vrstni red
 
-
-//@SuppressWarnings("serial")
+@SuppressWarnings("serial")
 public class GlavnoOkno extends JFrame implements ActionListener {
 	/**
 	 * JPanel
@@ -171,7 +168,6 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		menu_bar.add(gumb);
 		return gumb;
 	}
-
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {

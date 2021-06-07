@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * vrsta x oziroma y koordinat, tvori se po potezah posameznega igralca, rabimo jih da bomo
- * prepoznal, kdaj bo M v vrsto
+ * prepoznali, kdaj bo M v vrsto
  */
 
 public class Vrsta {

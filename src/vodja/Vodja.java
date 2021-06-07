@@ -2,7 +2,6 @@ package vodja;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
@@ -15,10 +14,6 @@ import splosno.Koordinati;
 
 
 public class Vodja {
-	
-	// private static enum VrstaIgralca{ RACUNALNIK, CLOVEK; }
-	
-	// private static BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 	
 	public static Map<Igralec, VrstaIgralca> vrstaIgralca = new EnumMap<Igralec,VrstaIgralca>(Igralec.class);
 		
@@ -52,7 +47,6 @@ public class Vodja {
 			Igralec igralec = igra.igralecNaPotezi;
 			// preverimo ce so ze izbrani igralci
 			if (Vodja.vrstaIgralca==null) {
-				// TODO: debug lahko zbrises print
 				System.out.println("Izberi igro");
 				break;
 			}
