@@ -149,10 +149,6 @@ public class IgralnoPolje extends JPanel implements MouseListener {
 				Vodja.clovekovaPoteza (new Koordinati(i, j));
 			}
 		}
-		// TODO: bliznjica za razveljaviPotezo (IZBRISI)
-		double w = squareWidth();
-		if (e.getX()+w/2>getWidth() && e.getY()+w/2>getHeight()) Vodja.igra.razveljaviPotezo();
-		repaint();
 	}
 
 	// metode za spremembo barve

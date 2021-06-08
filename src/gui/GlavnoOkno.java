@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
@@ -15,7 +16,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-
 import logika.Igralec;
 import vodja.Vodja;
 import vodja.VrstaIgralca;
@@ -68,17 +68,20 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		// menu
 		JMenuBar menu_bar = new JMenuBar();
 		setJMenuBar(menu_bar);
+
 		
 		//drop down menuji
 		JMenu menuIgralec1 = dodajMenu(menu_bar, " 1. igralec (BEL) ");
 		JMenu menuIgralec2 = dodajMenu(menu_bar, " 2. igralec (ČRN) ");
 		
 		gumbZacni = dodajGumb(menu_bar, "Začni igro");
+
+		// TODO ali je uredu to
+		menu_bar.add(Box.createHorizontalGlue());
 		
 		JMenu menuNastavitve = dodajMenu(menu_bar, "  Nastavitve");
-		
-		// TODO igram se		
-		gumbRazveljavi = dodajGumb(menu_bar, "Razveljavi");
+
+
 		
 		// dodajamo moznosti na menuIgralec1
 		menuIgralec1Clovek = dodajMenuItem(menuIgralec1, "Človek");
@@ -175,7 +178,7 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		VrstaIgralca vrstaIgralca1 = null;
 		VrstaIgralca vrstaIgralca2 = null;
 		
-		// TODO mogoce je preimenovanje brezveze ampak probimo za foro
+
 		//nastavimo 1. igralca (belega)
 		if (source == menuIgralec1Clovek) {
 			vrstaIgralca1 = VrstaIgralca.C;
@@ -260,7 +263,6 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 			Vodja.zamikRacunalnikovePoteze = 0;
 		
 
-		// TODO se ostale moznosti
 		} else if (source == gumbRazveljavi) {
 			boolean bool1 = false;
 			boolean bool2 = false;

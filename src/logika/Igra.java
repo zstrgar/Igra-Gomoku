@@ -59,7 +59,6 @@ public class Igra {
         }
       }
     }
-    System.out.println(VRSTE.size());
   }
 
 
