@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,6 +17,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
 import logika.Igralec;
 import vodja.Vodja;
 import vodja.VrstaIgralca;
@@ -75,12 +77,14 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 		JMenu menuIgralec2 = dodajMenu(menu_bar, " 2. igralec (ČRN) ");
 		
 		gumbZacni = dodajGumb(menu_bar, "Začni igro");
+		gumbRazveljavi = dodajGumb(menu_bar, "Razveljavi");
 
-		// TODO ali je uredu to
+		// TODO 
 		menu_bar.add(Box.createHorizontalGlue());
 		
+		
 		JMenu menuNastavitve = dodajMenu(menu_bar, "  Nastavitve");
-
+		menuNastavitve.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
 		
 		// dodajamo moznosti na menuIgralec1
@@ -163,6 +167,9 @@ public class GlavnoOkno extends JFrame implements ActionListener {
 	public JMenu dodajMenuVMenu(JMenu menu_kam, String naslov) {
 		JMenu menu = new JMenu(naslov);
 		menu_kam.add(menu);
+		// TODO
+		// da se odpre menu v oknu in ne izven njega
+		menu.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		return menu;
 	}
 	private JButton dodajGumb(JMenuBar menu_bar, String napis) {
